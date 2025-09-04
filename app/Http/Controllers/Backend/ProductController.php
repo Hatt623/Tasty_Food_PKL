@@ -40,7 +40,7 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required|',
             'description' => 'required|max:500',
-            'image'  => 'required|image|mimes:jpg,png|max:3024',
+            'image'  => 'required|image|mimes:jpg,png|max:10024',
         ]);
 
         $product = new Product();
@@ -88,7 +88,7 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required|',
             'description' => 'required|max:500',
-            'image'  => 'image|mimes:jpg,png|max:3024',
+            'image'  => 'image|mimes:jpg,png|max:10024',
         ]);
 
         $product = Product::findOrFail($id);

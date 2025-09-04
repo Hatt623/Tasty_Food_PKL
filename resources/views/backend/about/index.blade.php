@@ -27,17 +27,17 @@
                                 <tbody>
                                     @foreach ($about as $data)
                                     <tr>
-                                        <td> {{Str::limit($data->about)}} </td>
-                                        <td> {{Str::limit($data->vision)}} </td>
-                                        <td> {{Str::limit($data->mission)}} </td>
+                                        <td> {{Str::limit($data->about,10)}} </td>
+                                        <td> {{Str::limit($data->vision,10)}} </td>
+                                        <td> {{Str::limit($data->mission,10)}} </td>
                                         <td> <img src="{{ Storage::url($data->image_vision) }}" alt="{{ $data->vision }}" style="width: 60px; height: auto;"> </td>                                                         
                                         <td> <img src="{{ Storage::url($data->image_mission) }}" alt="{{ $data->mission }}" style="width: 60px; height: auto;"> </td>                                                         
                                         
                                         <td> 
-                                             <a href="{{ route('backend.about.show', $data->id) }}"
+                                            {{-- <a href="{{ route('backend.about.show', $data->id) }}"
                                                 class="btn btn-sm btn-success">
                                                 Tampilkan
-                                            </a> |
+                                            </a> | --}}
 
                                             <a href="{{ route('backend.about.edit', $data->id) }}"
                                                 class="btn btn-sm btn-warning">

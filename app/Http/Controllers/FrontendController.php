@@ -16,57 +16,14 @@ class FrontendController extends Controller
      */
     public function index()
     {
-        $product = Product::latest()->take(8)->get();
-        $latestproducts = Product::latest()->take(3)->get();
+        $products = Product::latest()->take(8)->get();
+        $latestproducts = Product::latest()->take(4)->get();
 
-        return view('index', compact('product','latestproducts'));
-    }
+        $news = News::latest()->take(8)->get();
+        $latestnews = News::latest()->take(5)->get();
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
+        $about = About::first();
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        return view('index', compact('products','latestproducts','news','latestnews','about'));
     }
 }

@@ -37,7 +37,7 @@
                                     <tr>
                                         <td> {{$loop->iteration}} </td>
                                         <td> {{$data->title}} </td>
-                                        <td> {{Str::limit($data->description)}} </td>
+                                        <td> {{Str::limit($data->description, 10)}} </td>
                                         <td> <img src="{{ Storage::url($data->image) }}" alt="{{ $data->title }}" style="width: 60px; height: auto;"> </td>                                                         
                                         
                                         <td> 
