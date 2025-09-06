@@ -5,22 +5,25 @@
         <!-- Hero Section -->
         <section id="hero" class="hero section light-background">
 
-        <div class="container">
-            <div class="row gy-4 justify-content-center justify-content-lg-between">
-            <div class="col-lg-5 order-2 order-lg-1 d-flex flex-column justify-content-center">
-                <h1 data-aos="fade-up">Healthy<br> Tasty Food</h1>
-                <p data-aos="fade-up" data-aos-delay="100">Lorem Ipsum</p>
-                <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
-                <a href="#book-a-table" class="btn-get-started">TENTANG KAMI</a>
+            <div class="container">
+                <div class="row gy-4 justify-content-center justify-content-lg-between">
+                <div class="col-lg-5 order-2 order-lg-1 d-flex flex-column justify-content-center">
+                    <hr data-aos="fade-up">
+                    <h1 data-aos="fade-up">HEALTHY</h1>
+                    <h2 data-aos="fade-up">Tasty Food</h2>
+                    <p data-aos="fade-up" data-aos-delay="100">{{$about->about}}</p>
+                    <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
+                    <a href="#" class="btn-get-started">TENTANG KAMI</a>
+                    </div>
+                </div>
+                <div class="col-lg-5 order-1 order-lg-2 hero-img" data-aos="zoom-out">
+                    <img src="{{asset('assets/frontend/img/hero-img-magang.png')}}" class="img-fluid animated" alt="">
+                </div>
                 </div>
             </div>
-            <div class="col-lg-5 order-1 order-lg-2 hero-img" data-aos="zoom-out">
-                <img src="{{asset('assets/frontend/img/hero-img.png')}}" class="img-fluid animated" alt="">
-            </div>
-            </div>
-        </div>
 
-        </section><!-- /Hero Section -->
+        </section>
+        <!-- /akhir Hero Section -->
 
         <!-- About Section -->
         <section id="about" class="about section">
@@ -29,8 +32,8 @@
         <div class="container section-title" data-aos="fade-up">
             <p><span class="description-title">TENTANG KAMI</span></p>
            
-                <p><span>{{$about->about}}</span>  </p>
-                <hr style="width:15%;height:3px;border-width:0;background-color:black; margin-left:auto; margin-right:auto;">
+            <h5>{{$about->about}}</h5>
+            <hr>
         </div>
         <!-- Akhir Tentang kami -->
 
