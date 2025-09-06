@@ -10,10 +10,10 @@
       <nav id="navmenu-2" class="navmenu-2">
         <ul>
           <li><a href="{{ url('/') }}">Home<br></a></li>
-          <li><a href="#about">Tentang</a></li>
-          <li><a href="#our-news">Berita</a></li>
+          <li><a href="{{route('about.index')}}">Tentang</a></li>
+          <li><a href="{{route('news.index')}}">Berita</a></li>
           <li><a href="{{ route('gallery.index') }}">Galeri</a></li>
-          <li><a href="#contact">Kontak</a></li>
+          <li><a href="{{route ('contact.index')}}">Kontak</a></li>
         </ul>
         <i class="mobile-nav-toggle d-xl-none bi bi-list"></i>
       </nav>
