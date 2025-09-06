@@ -3,60 +3,49 @@
     <div class="container">
       <div class="row gy-3">
         <div class="col-lg-3 col-md-6 d-flex">
-          <i class="bi bi-geo-alt icon"></i>
           <div class="address">
-            <h4>Address</h4>
-            <p>A108 Adam Street</p>
-            <p>New York, NY 535022</p>
-            <p></p>
+            <h2>Tasty Food</h2>
+            <p>{{$about->about}}</p>
+            <br>
+            <i class="bi bi-twitter-x" style="margin-right: 10px"></i>
+            <i class="bi bi-facebook"></i>
           </div>
 
         </div>
 
         <div class="col-lg-3 col-md-6 d-flex">
-          <i class="bi bi-telephone icon"></i>
           <div>
-            <h4>Contact</h4>
-            <p>
-              <strong>Phone:</strong> <span>+1 5589 55488 55</span><br>
-              <strong>Email:</strong> <span>info@example.com</span><br>
-            </p>
+            <h3>Useful Links</h3>
+            <p><a href="#">News</a></p>
+            <p><a href="{{url('/')}}">Home</a></p>
+            <p><a href="{{route('gallery.index')}}">Galeri</a></p>
+            <p><a href="#">Testimonial</a></p>
           </div>
         </div>
 
         <div class="col-lg-3 col-md-6 d-flex">
-          <i class="bi bi-clock icon"></i>
           <div>
-            <h4>Opening Hours</h4>
-            <p>
-              <strong>Mon-Sat:</strong> <span>11AM - 23PM</span><br>
-              <strong>Sunday</strong>: <span>Closed</span>
-            </p>
+            <h3>Privacy</h3>
+              <p><a href="">Karir</a></p>
+              <p><a href="">Tentang kami</a></p>
+              <p><a href="">Kontak kami</a></p>
+              <p><a href="">Servis</a></p>
           </div>
         </div>
 
         <div class="col-lg-3 col-md-6">
-          <h4>Follow Us</h4>
-          <div class="social-links d-flex">
-            <a href="#" class="twitter"><i class="bi bi-twitter-x"></i></a>
-            <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-            <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-            <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
-          </div>
+          <h3>Contact Info</h3>
+            <p><i class="bi bi-envelope-fill" style="margin-right: 10px;"></i><a href="">tastyfood@gmail.com</a></p>
+            <p><i class="bi bi-telephone-fill" style="margin-right: 10px;"></i><a href="">+62 812 3456 7890</a></p>
+            <p><i class="bi bi-geo-alt-fill" style="margin-right: 10px;"></i><a href="">Kota Bandung, Jawa Barat</a></p>
+
         </div>
 
       </div>
     </div>
 
     <div class="container copyright text-center mt-4">
-      <p>© <span>Copyright</span> <strong class="px-1 sitename">Yummy</strong> <span>All Rights Reserved</span></p>
-      <div class="credits">
-        <!-- All the links in the footer should remain intact. -->
-        <!-- You can delete the links only if you've purchased the pro version. -->
-        <!-- Licensing information: https://bootstrapmade.com/license/ -->
-        <!-- Purchase the pro version with working PHP/AJAX contact form: [buy-url] -->
-        Designed by <a href="https://bootstrapmade.com/">BootstrapMade</a> Distributed by <a href="https://themewagon.com">ThemeWagon</a>
-      </div>
+      <p>© <span>Copyright</span><span>All Rights Reserved</span></p>
     </div>
 
   </footer>

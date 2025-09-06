@@ -165,7 +165,7 @@
                 </div>
 
                 <div class="text-center mt-4" data-aos="fade-up" data-aos-delay="400">
-                <a href="#" class="btn btn-dark">
+                <a href="{{route('gallery.index')}}" class="btn btn-dark">
                     Lihat Lebih Banyak
                 </a>
                 </div>

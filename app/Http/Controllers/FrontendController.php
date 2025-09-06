@@ -16,7 +16,7 @@ class FrontendController extends Controller
      */
     public function index()
     {
-        $products = Product::latest()->take(8)->get();
+        $products = Product::latest()->take(6)->get();
         $latestproducts = Product::latest()->take(4)->get();
 
         $news = News::latest()->take(8)->get();
@@ -25,5 +25,14 @@ class FrontendController extends Controller
         $about = About::first();
 
         return view('index', compact('products','latestproducts','news','latestnews','about'));
+    }
+
+    public function gallery()
+    {
+        $about = About::first();
+        $products = Product::all();
+        $featuredproducts = Product::latest()->take(3)->get();
+        return view('gallery', compact('products','featuredproducts','about'));
+
     }
 }

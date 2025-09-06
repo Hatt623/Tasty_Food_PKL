@@ -596,6 +596,356 @@ h6 {
 }
 
 /*--------------------------------------------------------------
+# HEADER-2
+--------------------------------------------------------------*/
+.header-2 {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 999;
+  width: 100%;
+  padding: 20px 0;
+  background: transparent;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.header-2.scrolled {
+  background: rgba(0, 0, 0, 0.95);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+
+.header-2 .logo {
+  line-height: 1;
+}
+
+.header-2 .logo img {
+  max-height: 36px;
+  margin-right: 8px;
+}
+
+.header-2 .logo h1 {
+  font-size: 30px;
+  margin: 0;
+  font-weight: 700;
+  color: var(--contrast-color);
+  font-family: var(--default-font);
+}
+
+.header-2 .logo span {
+  color: var(--accent-color);
+  font-size: 36px;
+}
+
+.header-2 .btn-getstarted,
+.header-2 .btn-getstarted:focus {
+  color: var(--contrast-color);
+  background: var(--accent-color);
+  font-size: 14px;
+  padding: 8px 26px;
+  margin: 0;
+  transition: 0.3s;
+}
+
+.header-2 .btn-getstarted:hover,
+.header-2 .btn-getstarted:focus:hover {
+  color: var(--contrast-color);
+  background: color-mix(in srgb, var(--accent-color), transparent 15%);
+}
+
+@media (max-width: 1200px) {
+  .header-2 .logo {
+    order: 1;
+  }
+
+  .header-2 .btn-getstarted {
+    order: 2;
+    margin: 0 15px 0 0;
+    padding: 6px 20px;
+  }
+
+  .header-2 .navmenu {
+    order: 3;
+  }
+}
+
+.scrolled .header-2 {
+  box-shadow: 0px 0 18px rgba(0, 0, 0, 0.1);
+}
+
+/*--------------------------------------------------------------
+# HEADER-2
+--------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
+# NAVMENU-2
+--------------------------------------------------------------*/
+
+/* Desktop Navigation */
+@media (min-width: 1200px) {
+  .navmenu-2 {
+    padding: 0;
+    display: flex;
+    justify-content: flex-end;
+    flex: 1;    
+  }
+
+  .navmenu-2 ul {
+    margin: 0;
+    padding-left: 10;
+    display: flex;
+    list-style: none;
+    align-items: center;
+  }
+
+  .navmenu-2 li {
+    position: relative;
+  }
+
+  .navmenu-2>ul>li {
+    white-space: nowrap;
+    padding: 15px 14px;
+  }
+
+  .navmenu-2>ul>li:last-child {
+    padding-right: 0;
+  }
+
+  .navmenu-2 a,
+  .navmenu-2 a:focus {
+    color: var(--contrast-color);
+    font-size: 15px;
+    padding: 0 2px;
+    font-family: var(--nav-font);
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    white-space: nowrap;
+    transition: 0.3s;
+    position: relative;
+  }
+
+  .navmenu-2 a i,
+  .navmenu-2 a:focus i {
+    font-size: 12px;
+    line-height: 0;
+    margin-left: 5px;
+    transition: 0.3s;
+  }
+
+  .navmenu-2>ul>li>a:before {
+    content: "";
+    position: absolute;
+    height: 2px;
+    bottom: -6px;
+    left: 0;
+    background-color: var(--nav-hover-color);
+    visibility: hidden;
+    width: 0px;
+    transition: all 0.3s ease-in-out 0s;
+  }
+
+  .navmenu-2 a:hover:before,
+  .navmenu-2 li:hover>a:before,
+  .navmenu-2 .active:before {
+    visibility: visible;
+    width: 100%;
+  }
+
+  .navmenu-2 li:hover>a,
+  .navmenu-2 .active,
+  .navmenu-2 .active:focus {
+    color: color-mix(in srgb, var(--nav-color) 80%, black 50%);
+  }
+
+  .navmenu-2 .dropdown ul {
+    margin: 0;
+    padding: 10px 0;
+    background: var(--nav-dropdown-background-color);
+    display: block;
+    position: absolute;
+    visibility: hidden;
+    left: 14px;
+    top: 130%;
+    opacity: 0;
+    transition: 0.3s;
+    border-radius: 4px;
+    z-index: 99;
+    box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
+  }
+
+  .navmenu-2 .dropdown ul li {
+    min-width: 200px;
+  }
+
+  .navmenu-2 .dropdown ul a {
+    padding: 10px 20px;
+    font-size: 15px;
+    text-transform: none;
+    color: var(--nav-dropdown-color);
+  }
+
+  .navmenu-2 .dropdown ul a i {
+    font-size: 12px;
+  }
+
+  .navmenu-2 .dropdown ul a:hover,
+  .navmenu-2 .dropdown ul .active:hover,
+  .navmenu-2 .dropdown ul li:hover>a {
+    color: var(--nav-dropdown-hover-color);
+  }
+
+  .navmenu-2 .dropdown:hover>ul {
+    opacity: 1;
+    top: 100%;
+    visibility: visible;
+  }
+
+  .navmenu-2 .dropdown .dropdown ul {
+    top: 0;
+    left: -90%;
+    visibility: hidden;
+  }
+
+  .navmenu-2 .dropdown .dropdown:hover>ul {
+    opacity: 1;
+    top: 0;
+    left: -100%;
+    visibility: visible;
+  }
+}
+
+/* Mobile Navigation */
+@media (max-width: 1199px) {
+  .mobile-nav-toggle-2 {
+    color: var(--contrast-color);
+    font-size: 28px;
+    line-height: 0;
+    margin-right: 10px;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+
+  .navmenu-2 {
+    padding: 0;
+    z-index: 9997;
+  }
+
+  .navmenu-2 ul {
+    display: none;
+    list-style: none;
+    position: absolute;
+    inset: 60px 20px 20px 20px;
+    padding: 10px 0;
+    margin: 0;
+    border-radius: 6px;
+    background-color: var(--nav-mobile-background-color);
+    border: 1px solid color-mix(in srgb, var(--default-color), transparent 90%);
+    box-shadow: none;
+    overflow-y: auto;
+    transition: 0.3s;
+    z-index: 9998;
+  }
+
+  .navmenu-2 a,
+  .navmenu-2 a:focus {
+    color: var(--nav-dropdown-color);
+    padding: 10px 20px;
+    font-family: var(--nav-font);
+    font-size: 17px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    white-space: nowrap;
+    transition: 0.3s;
+  }
+
+  .navmenu-2 a i,
+  .navmenu-2 a:focus i {
+    font-size: 12px;
+    line-height: 0;
+    margin-left: 5px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: 0.3s;
+    background-color: color-mix(in srgb, var(--accent-color), transparent 90%);
+  }
+
+  .navmenu-2 a i:hover,
+  .navmenu-2 a:focus i:hover {
+    background-color: var(--accent-color);
+    color: var(--contrast-color);
+  }
+
+  .navmenu-2 a:hover,
+  .navmenu-2 .active,
+  .navmenu-2 .active:focus {
+    color: var(--nav-dropdown-hover-color);
+  }
+
+  .navmenu-2 .active i,
+  .navmenu-2 .active:focus i {
+    background-color: var(--accent-color);
+    color: var(--contrast-color);
+    transform: rotate(180deg);
+  }
+
+  .navmenu-2 .dropdown ul {
+    position: static;
+    display: none;
+    z-index: 99;
+    padding: 10px 0;
+    margin: 10px 20px;
+    background-color: var(--nav-dropdown-background-color);
+    transition: all 0.5s ease-in-out;
+  }
+
+  .navmenu-2 .dropdown ul ul {
+    background-color: rgba(33, 37, 41, 0.1);
+  }
+
+  .navmenu-2 .dropdown>.dropdown-active {
+    display: block;
+    background-color: rgba(33, 37, 41, 0.03);
+  }
+
+  .mobile-nav-active {
+    overflow: hidden;
+  }
+
+  .mobile-nav-active .mobile-nav-toggle {
+    color: #fff;
+    position: absolute;
+    font-size: 32px;
+    top: 15px;
+    right: 15px;
+    margin-right: 0;
+    z-index: 9999;
+  }
+
+  .mobile-nav-active .navmenu-2 {
+    position: fixed;
+    overflow: hidden;
+    inset: 0;
+    background: rgba(33, 37, 41, 0.8);
+    transition: 0.3s;
+  }
+
+  .mobile-nav-active .navmenu-2>ul {
+    display: block;
+  }
+}
+
+/*--------------------------------------------------------------
+# AkhirNAVMENU-2
+--------------------------------------------------------------*/
+
+/*--------------------------------------------------------------
 # Global Footer
 --------------------------------------------------------------*/
 .footer {
@@ -605,6 +955,11 @@ h6 {
   font-size: 14px;
   padding: 40px 0;
   position: relative;
+}
+
+.footer a{
+  color: #fff;
+  font-weight: 200px;
 }
 
 .footer .icon {
@@ -971,6 +1326,50 @@ section,
     transform: translateY(-10px);
   }
 }
+
+/*--------------------------------------------------------------
+# HERO SECTION 2 Section
+--------------------------------------------------------------*/
+.hero-2 {
+  width: 100%;
+  min-height: 60vh;
+  position: relative;
+  padding: 100px 0;
+  display: flex;
+  align-items: center;
+}
+
+.hero-2 {
+  background: url('/assets/frontend/img/Group-70-2x.png') center/cover no-repeat;
+}
+
+.hero-2 h2 {
+  font-size: 64px;
+  font-weight: 1000;
+  color: var(--contrast-color);
+}
+
+@media (max-width: 640px) {
+
+  .hero-2 h2 {
+    font-size: 46px;
+    font-weight: 1000;
+    color: var(--contrast-color);
+
+  }
+
+  .hero-2 p {
+    font-size: 18px;
+    line-height: 24px;
+    margin-bottom: 30px;
+  }
+
+}
+
+
+/*--------------------------------------------------------------
+# AKHIR HERO SECTION 2
+--------------------------------------------------------------*/
 
 /*--------------------------------------------------------------
 # About Section
@@ -1542,34 +1941,38 @@ section,
 /*--------------------------------------------------------------
 # Gallery Section
 --------------------------------------------------------------*/
-.gallery {
-  overflow: hidden;
+.carousel-featured .card {
+  max-width: 200%;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.gallery .swiper-wrapper {
-  height: auto;
+.carousel-featured .carousel-item img {
+  object-fit: cover;
 }
 
-.gallery .swiper-pagination {
-  margin-top: 20px;
-  position: relative;
+/* Membuat ikon panah terlihat jelas */
+.carousel-featured .carousel-control-prev-icon,
+.carousel-featured .carousel-control-next-icon {
+  background-color: rgba(0, 0, 0, 0.5); /* latar belakang gelap transparan */
+  background-size: 100%;
+  border-radius: 50%; /* bulat */
 }
 
-.gallery .swiper-pagination .swiper-pagination-bullet {
-  background-color: color-mix(in srgb, var(--default-color), transparent 85%);
-  border: 0;
-  width: 12px;
-  height: 12px;
-  opacity: 1;
+/* Opsional: perbesar ukuran ikon */
+.carousel-featured .carousel-control-prev-icon,
+.carousel-featured .carousel-control-next-icon {
+  width: 3rem;
+  height: 3rem;
 }
 
-.gallery .swiper-pagination .swiper-pagination-bullet-active {
-  background-color: var(--accent-color);
-  opacity: 1;
+/* Posisi tombol sedikit keluar dari gambar */
+.carousel-featured .carousel-control-prev {
+  left: 10px;
 }
-
-.gallery .swiper-slide-active {
-  text-align: center;
+.carousel-featured .carousel-control-next {
+  right: 10px;
 }
 
 @media (min-width: 992px) {
@@ -1690,6 +2093,6 @@ section,
 /*--------------------------------------------------------------
 # Starter Section Section
 --------------------------------------------------------------*/
-.starter-section {
+/* .starter-section { */
   /* Add your styles here */
-}
+/* } */

@@ -13,7 +13,7 @@ use App\Http\Controllers\FrontendController;
 
 
 Route::get('/',[FrontendController::class, 'index']);
-
+Route::get('/gallery',[FrontendController::class, 'gallery'])->name('gallery.index');
 
 // Route::get('/', function () {
 //     return view('welcome');
