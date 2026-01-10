@@ -11,11 +11,11 @@ use App\Http\Controllers\Backend\AboutController;
 use App\Http\Controllers\Backend\ContactController;
 use App\Http\Controllers\Backend\StaffsController;
 use App\Http\Controllers\Backend\ReservationController;
-use App\Http\Controllers\Backend\PaymentController;
+
 
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\ReservationCSController;
-use App\Http\Controllers\PaymentCSController;
+use App\Http\Controllers\ReviewController;
 
 
 
@@ -32,7 +32,8 @@ Route::get('/reservationSettings', [ReservationCSController::class, 'reservation
 Route::get('/reservationSettings/{id}', [ReservationCSController::class, 'edit'])->name('reservation.edit');
 Route::put('/reservationSettings/{id}', [ReservationCSController::class, 'update'])->name('reservation.update');
 
-Route::resource('/payment-cs', PaymentCSController::class);
+//Reviews
+Route::post('/products/{product}/reviews', [ReviewController::class, 'store'])->middleware('auth')->name('reviews.store');
 
 // Proses form kontak (POST)
 Route::post('/contact', [FrontendController::class, 'storeContact'])->name('contact.store');
@@ -56,7 +57,6 @@ Route::group(['prefix' => 'admin', 'as' => 'backend.', 'middleware' => ['auth', 
     Route::resource('/news', NewsController::class);  
     Route::resource('/staff', StaffsController::class); 
     Route::resource('/reservation', ReservationController::class);
-    Route::resource('/payment', PaymentController::class);  
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

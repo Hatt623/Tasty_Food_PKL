@@ -71,6 +71,23 @@
                                 >
                             </a>
                         </div>
+                        {{-- Rating--}}
+                        @if (Auth::check())
+                        <form action="{{ route('reviews.store', $data->id) }}" method="POST">
+                            @csrf
+                            <select name="rating" class="form-select mt-2">
+                                <option hidden>Rate</option>
+                                <option value="1">⭐</option>
+                                <option value="2">⭐⭐</option>
+                                <option value="3">⭐⭐⭐</option>
+                                <option value="4">⭐⭐⭐⭐</option>
+                                <option value="5">⭐⭐⭐⭐⭐</option>
+                            </select>
+                            <button type="submit" class="btn btn-sm btn-dark mt-2">Rate</button>
+                        </form>
+                        @endif
+                        <p class="lead mt-2">Rating: {{ number_format($data->reviews()->avg('rating'), 1) }}/5</p>
+                        {{-- Akhir rating --}}
                     </div>
                 @endforeach
                 </div>

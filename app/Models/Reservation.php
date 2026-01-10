@@ -12,9 +12,4 @@ class Reservation extends Model
     public function user(){
         return $this->belongsTo(User::class, 'user_id');
     }
-
-    //relasi dengan payment
-    public function payment(){
-        return $this->hasOne(Payment::class, 'reservation_id');
-    }
 }
