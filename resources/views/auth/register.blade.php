@@ -23,7 +23,7 @@
                                        name="name" 
                                        value="{{ old('name') }}" 
                                        class="form-control @error('name') is-invalid @enderror" 
-                                       placeholder="Enter your name" 
+                                       placeholder="Masukkan Nama anda" 
                                        required 
                                        autofocus>
                                 @error('name')
@@ -39,7 +39,7 @@
                                        name="email"
                                        value="{{ old('email') }}" 
                                        class="form-control @error('email') is-invalid @enderror" 
-                                       placeholder="Enter your email" 
+                                       placeholder="Masukkan Email anda" 
                                        required>
                                 @error('email')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -54,7 +54,7 @@
                                        name="phone"
                                        value="{{ old('phone') }}" 
                                        class="form-control @error('phone') is-invalid @enderror" 
-                                       placeholder="Enter your phone" 
+                                       placeholder="Masukkan Nomor Telepon Anda" 
                                        required>
                                 @error('phone')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -69,7 +69,7 @@
                                        name="password"
                                        value="{{ old('password') }}" 
                                        class="form-control @error('password') is-invalid @enderror" 
-                                       placeholder="Enter your password" 
+                                       placeholder="Masukkan Password anda" 
                                        required>
                                 @error('password')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -83,7 +83,7 @@
                                        type="password" 
                                        name="password_confirmation" 
                                        class="form-control @error('password_confirmation') is-invalid @enderror" 
-                                       placeholder="Enter your password again" 
+                                       placeholder="Masukkan Ulang Password Anda" 
                                        required>
                                 @error('password_confirmation')
                                     <div class="invalid-feedback">{{ $message }}</div>

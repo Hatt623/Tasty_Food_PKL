@@ -52,8 +52,13 @@ class ApiReservationController extends Controller
         $validator = Validator::make($request->all(), [
             'reservation_date' => 'required|date|after_or_equal:today',
             'reservation_time' => 'required|date_format:H:i',
-            'guest_count'      => 'required|integer|min:1',
-        ]);
+            'guest_count'      => 'required|integer|min:1|max:100',
+        ],
+        [
+            'guest_count.max' => 'Jumlah tamu tidak boleh lebih dari 100',
+            'guest_count.min' => 'Jumlah tamu minimal adalah 1'
+        ]
+        );
 
         if ($validator->fails()) {
             return response()->json([
@@ -145,7 +150,7 @@ class ApiReservationController extends Controller
         $validator = Validator::make($request->all(), [
             'reservation_date' => 'required|date|after_or_equal:today',
             'reservation_time' => 'required|date_format:H:i',
-            'guest_count'      => 'required|integer|min:1',
+            'guest_count'      => 'required|integer|min:1|max:100',
         ]);
 
         if ($validator->fails()) {

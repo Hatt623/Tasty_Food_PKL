@@ -23,7 +23,7 @@
                                        name="email" 
                                        value="{{ old('email') }}" 
                                        class="form-control @error('email') is-invalid @enderror" 
-                                       placeholder="Enter your email" 
+                                       placeholder="Masukkan Email anda" 
                                        required 
                                        autofocus>
                                 @error('email')
@@ -38,7 +38,7 @@
                                        type="password" 
                                        name="password" 
                                        class="form-control @error('password') is-invalid @enderror" 
-                                       placeholder="Enter your password" 
+                                       placeholder="Masukkan Password anda" 
                                        required>
                                 @error('password')
                                     <div class="invalid-feedback">{{ $message }}</div>
