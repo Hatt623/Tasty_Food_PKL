@@ -57,6 +57,8 @@ Route::group(['prefix' => 'admin', 'as' => 'backend.', 'middleware' => ['auth', 
     Route::resource('/news', NewsController::class);  
     Route::resource('/staff', StaffsController::class); 
     Route::resource('/reservation', ReservationController::class);
+   
+    Route::post('/contact/{contact}/reply', [ContactController::class, 'reply'])->name('contact.reply');
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

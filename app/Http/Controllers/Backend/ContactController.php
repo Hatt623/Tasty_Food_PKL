@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\Contact; 
 
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\ContactReplyMail;
 
 class ContactController extends Controller
 {
@@ -33,4 +35,23 @@ class ContactController extends Controller
         toast('Data berhasil dihapus', 'success');
         return redirect()->route('backend.contact.index');
     }
+
+    # TURN OFF NORTON(OR ANY ANTIVIRUS) EMAIL PROTECTION TO ENABLE EMAIL SENDING
+    public function reply(Request $request, Contact $contact)
+    {
+        $request->validate([
+            'reply' => 'required|string|max:1000',
+        ]);
+
+        // Kirim email ke customer
+        Mail::to($contact->email)->send(new ContactReplyMail($contact, $request->reply));
+
+        // Opsional: simpan balasan di DB
+        $contact->update(['reply' => $request->reply]);
+
+        toast('Balasan berhasil dikirim', 'success');
+        return redirect()->route('backend.contact.index');
+    }
+
+
 }

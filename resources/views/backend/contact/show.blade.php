@@ -37,6 +37,25 @@
                             </div>
                         </div>
                     </div>
+
+                    <form action="{{ route('backend.contact.reply', $contact->id) }}" method="POST" enctype="multipart/form-data" role="form"> 
+                         @csrf 
+                         <div class="row mt-3">
+                            <div class="col">
+                                <div class="mb-3">
+                                    <label><strong>Kirim balasan:</strong></label>
+                                    <textarea name="reply" class="form-control" rows="3" placeholder="Tulisakan balasan Anda"></textarea>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="d-flex justify-content-end">
+                            <button type="submit" class="btn btn-primary mt-2">Send Reply</button>
+                        </div>
+                    </form>
+
+                   
+
                     <div class="mt-4">
                         <a href="{{ route('backend.contact.index') }}" class="btn btn-sm btn-secondary">
                             <i class="fas fa-arrow-left"></i> Kembali
