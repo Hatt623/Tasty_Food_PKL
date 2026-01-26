@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Reservation;
+use App\Models\ReservationHistory;
 use App\Model\User;
 
 class ReservationController extends Controller
@@ -27,9 +28,9 @@ class ReservationController extends Controller
      */
     public function show(string $id)
     {
-        // gk dipake dl
         $reservation = Reservation::with('user')->findOrFail($id);
-        return view('backend.reservation.show', compact('reservation'));
+        $reservationHistory = ReservationHistory::where('reservation_id', $id)->latest()->get();
+        return view('backend.reservation.show', compact('reservation', 'reservationHistory'));
     }
 
     /**
@@ -50,10 +51,20 @@ class ReservationController extends Controller
 
         $request->validate([
             'status' => 'required|in:pending,confirmed,cancelled,completed',
+            'payment_status' => 'nullable|in:paid,unpaid',
         ]);
 
         $reservation->status = $request->status;
+        $reservation->payment_status = $request->payment_status;
         $reservation->save();
+
+        ReservationHistory::create([
+            'reservation_id' => $reservation->id,
+            'staff_name'     => auth()->user()->name,
+            'old_status'     => $reservation->getOriginal('status'),
+            'new_status'     => $request->status,
+            'note'           => $request->note ?? '-',
+        ]);
 
         toast('Reservasi berhasil di update.', 'success');
         return redirect()->route('backend.reservation.edit', $reservation->id);

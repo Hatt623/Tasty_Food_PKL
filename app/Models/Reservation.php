@@ -12,4 +12,9 @@ class Reservation extends Model
     public function user(){
         return $this->belongsTo(User::class, 'user_id');
     }
+
+    //relasi dengan reservation history
+    public function reservationHistories(){
+        return $this->hasMany(ReservationHistory::class, 'reservation_id');
+    }
 }

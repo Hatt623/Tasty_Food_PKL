@@ -55,7 +55,7 @@ class AboutController extends Controller
             'image_vision'  => 'image|mimes:jpg,png|max:10024',
             'image_mission'  => 'image|mimes:jpg,png|max:10024',
         ]);
-
+    
         $about = About::findOrFail($id);
         $about ->about = $request->about;
         $about ->vision = $request->vision;

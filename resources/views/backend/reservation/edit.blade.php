@@ -112,6 +112,12 @@
                                     </div>
                                 </div>
 
+                                <div class="row g-2 mt-3">
+                                    <div class="col-md-10">
+                                        <textarea name="note" class="form-control" rows="3" placeholder="Catatan (opsional)">{{ old('note') }}</textarea>
+                                    </div>
+                                </div>
+
                                 <div class="mt-3">
                                     <button type="submit" class="btn btn-primary">
                                         <i class="fas fa-save"></i> Simpan Perubahan

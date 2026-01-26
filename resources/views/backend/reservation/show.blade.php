@@ -84,6 +84,39 @@
                             </div>
                         </div>
 
+                        {{-- Sejarah perubahan reservasi oleh operator --}}
+                        <h6 class="text-uppercase fw-bold text-muted mb-3">Sejarah Perubahan oleh operator</h6>
+                        <div class="card-body">
+                            <div class="table table-responsive">
+                                <table class="table" id="datahistory">
+                                    <thead>
+                                        <tr>
+                                            <th> No </th>
+                                            <th> Status lama </th>
+                                            <th> Status baru </th>
+                                            <th> Oleh Staff </th>
+                                            <th> diubah pada </th>
+                                            <th>Note</th>
+                                        </tr>
+
+                                    </thead>
+
+                                    <tbody>
+                                        @foreach ($reservationHistory as $data)
+                                        <tr>
+                                            <td> {{$loop->iteration}} </td>
+                                            <td> {{ $data->old_status }} </td>
+                                            <td> {{ $data->new_status }} </td>
+                                            <td> {{ $data->staff_name }} </td>
+                                            <td> {{ $data->created_at }} </td>
+                                            <td> {{ $data->note }} </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        
                         <hr>
                         <a href="{{ route('backend.reservation.index') }}" class="btn btn-secondary">
                             <i class="fas fa-arrow-left"></i> Kembali ke Data Reservasi
@@ -95,3 +128,13 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script>
+    $(document).ready(function () {
+        $('#datahistory').DataTable();
+    });
+    </script>
+@endpush
