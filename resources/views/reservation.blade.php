@@ -29,7 +29,7 @@
                         <div class="row g-3">
                             <div class="col-md-12 d-flex flex-column gap-3">
                                 <div>
-                                    <input type="number" name="guest_count" value="{{old ('guest_count')}}" class="form-control @error('guest_count') is-invalid @enderror" id="guest_count" placeholder="Guest Count" min="1" max="100" required >
+                                    <input type="number" name="guest_count" value="{{old ('guest_count')}}" class="form-control @error('guest_count') is-invalid @enderror" id="guest_count" placeholder="Jumlah Tamu" min="1" max="100" required >
                             
                                     @error('guest_count')
                                         <span class="invalid-feedback" role="alert">
@@ -41,7 +41,7 @@
 
                             <div class="col-md-6 d-flex flex-column gap-3">
                                 <div>
-                                    <input type="date" name="reservation_date" value="{{old ('reservation_date')}}" class="form-control @error('reservation_date') is-invalid @enderror" id="reservation_date" placeholder="Reservation Date" required>
+                                    <input type="date" name="reservation_date" value="{{old ('reservation_date')}}" class="form-control @error('reservation_date') is-invalid @enderror" id="reservation_date" placeholder="Tanggal Reservasi" required>
                                 
                                     @error('reservation_date')
                                         <span class="invalid-feedback" role="alert">
@@ -53,7 +53,7 @@
 
                             <div class="col-md-6 d-flex flex-column gap-3">
                                 <div>
-                                    <input type="time" name="reservation_time" value="{{old ('reservation_time')}}" class="form-control @error('reservation_time') is-invalid @enderror" id="reservation_time" placeholder="Reservation Time" required>
+                                    <input type="time" name="reservation_time" value="{{old ('reservation_time')}}" class="form-control @error('reservation_time') is-invalid @enderror" id="reservation_time" placeholder="Waktu Reservasi" required>
                                 
                                     @error('reservation_time')
                                         <span class="invalid-feedback" role="alert">

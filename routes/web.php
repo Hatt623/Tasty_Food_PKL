@@ -31,6 +31,7 @@ Route::post('/reservation', [ReservationCSController::class, 'store'])->name('re
 Route::get('/reservationSettings', [ReservationCSController::class, 'reservationSettingsIndex'])->name('reservation.settings.index');
 Route::get('/reservationSettings/{id}', [ReservationCSController::class, 'edit'])->name('reservation.edit');
 Route::put('/reservationSettings/{id}', [ReservationCSController::class, 'update'])->name('reservation.update');
+Route::put('/reservationSettings/{id}/cancel', [ReservationCSController::class, 'cancel'])->name('reservation.cancel');
 
 //Reviews
 Route::post('/products/{product}/reviews', [ReviewController::class, 'store'])->middleware('auth')->name('reviews.store');

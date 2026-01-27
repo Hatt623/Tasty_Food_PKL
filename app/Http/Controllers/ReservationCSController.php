@@ -108,8 +108,17 @@ class ReservationCSController extends Controller
         }
 
         $reservations = Reservation::where('user_id', Auth::id())->latest()->get();
-
         return view('reservationSettingsIndex', compact('reservations'));
+    }
+
+     public function cancel(Request $request, string $id)
+    {
+        $reservation = Reservation::findOrFail($id);
+        $reservation->status = 'cancelled';
+        $reservation->save();
+        
+        toast('Reservasi berhasil dibatalkan', 'success');
+        return redirect()->route('reservation.settings.index');
     }
 
     public function edit(string $id)

@@ -84,8 +84,21 @@
                             </div>
                         </div>
 
+                        <hr>
+                        <a href="{{ route('backend.reservation.index') }}" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left"></i> Kembali ke Data Reservasi
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="card">
                         {{-- Sejarah perubahan reservasi oleh operator --}}
-                        <h6 class="text-uppercase fw-bold text-muted mb-3">Sejarah Perubahan oleh operator</h6>
+                        <div class="card-header bg-secondary text-white">
+                            Sejarah Perubahan oleh operator
+                        </div>
                         <div class="card-body">
                             <div class="table table-responsive">
                                 <table class="table" id="datahistory">
@@ -116,15 +129,10 @@
                                 </table>
                             </div>
                         </div>
-                        
-                        <hr>
-                        <a href="{{ route('backend.reservation.index') }}" class="btn btn-secondary">
-                            <i class="fas fa-arrow-left"></i> Kembali ke Data Reservasi
-                        </a>
-
                     </div>
                 </div>
             </div>
+
         </div>
     </div>
 @endsection
@@ -134,7 +142,10 @@
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
     <script>
     $(document).ready(function () {
-        $('#datahistory').DataTable();
+        $('#datahistory').DataTable({
+            info:false,
+            responsive:true
+        });
     });
     </script>
 @endpush

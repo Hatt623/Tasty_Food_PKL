@@ -17,4 +17,11 @@ class Reservation extends Model
     public function reservationHistories(){
         return $this->hasMany(ReservationHistory::class, 'reservation_id');
     }
+
+    //relasi dengan product melalui reservation_product
+    public function products(){
+        return $this->belongsToMany(Product::class, 'reservation_product')
+                    ->withPivot('quantity', 'note')
+                    ->withTimestamps();
+    }
 }

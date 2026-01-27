@@ -42,6 +42,7 @@
                                         <th>Status Reservasi</th>
                                         <th>Status Pembayaran</th>
                                         <th>Aksi</th>
+                                        <th>Cancel</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -60,18 +61,21 @@
                                                 <a href="{{ route('reservation.edit', $reservation->id) }}" 
                                                 class="btn-link-more btn btn-sm btn-light border-dark">
                                                     Edit
-                                                </a>
-                                                
-                                                {{-- kayaknya g usah dl --}}
-                                                {{-- <form action="{{ route('reservation.destroy', $reservation->id) }}" 
-                                                    method="POST" style="display:inline;">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-sm btn-danger">Cancel</button>
-                                                </form>  --}}
-                                                    
+                                                </a>                              
                                                 @endif
                                                
+                                            </td>
+                                            <td>
+                                                @if($reservation->status == 'cancelled' || $reservation->status == 'completed' || $reservation->status == 'confirmed')
+                                                    <span class="text-muted">-</span>
+                                                @else
+                                                 <form action="{{ route('reservation.cancel', $reservation->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('PUT')
+                                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Apakah Anda yakin ingin membatalkan reservasi ini?')">Cancel</button>
+                                                    <input type="hidden" name="status" value="cancelled">
+                                                </form> 
+                                                @endif
                                             </td>
                                         </tr>
                                     @endforeach
