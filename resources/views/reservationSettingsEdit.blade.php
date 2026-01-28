@@ -26,6 +26,55 @@
             <div class="container py-5">
                 <div class="contact-section" data-aos="fade-up" data-aos-delay="100">
 
+                    {{-- pop up menu --}}
+                    <div class="modal fade" id="placeOrderModal" tabindex="-1" aria-labelledby="placeOrderModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-xl">
+                            <div class="modal-content">
+                            <form action="{{ route('reservation.products.store', $reservation->id) }}" method="post" enctype="multipart/form-data" role="form">
+                                @csrf
+                                <div class="modal-header">
+                                    <h5 class="modal-title">Silahkan pilih menu anda</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <table class="table table-bordered align-middle" id="placeOrderTable">
+                                        <thead class="table-light">
+                                        <tr>
+                                            <th>Gambar</th>
+                                            <th>Produk</th>
+                                            <th>Harga</th>
+                                            <th>Jumlah</th>
+                                            <th>Catatan</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach($products as $index => $product)
+                                                <tr>
+                                                    <td>
+                                                        <img src="../../{{$product->image }}" alt="{{ $product->name }}" class="img-thumbnail" width="100">
+                                                    </td>
+                                                    <td>{{ $product->name }}</td>
+                                                    <td>Rp {{ number_format($product->price,0,',','.') }}</td>
+                                                    <td>
+                                                        <input type="hidden" name="products[{{ $index }}][product_id]" value="{{ $product->id }}">
+                                                        <input type="number" name="products[{{ $index }}][quantity]" min="0" value="{{ $product->reserved_quantity }}" class="form-control">
+                                                    </td>
+                                                    <td>
+                                                        <input type="text" name="products[{{ $index }}][note]" class="form-control" placeholder="Catatan (opsional)">
+                                                    </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn sm btn-dark">Submit Order</button>
+                                </div>
+                            </form>
+                            </div>
+                        </div>
+                    </div>
+
                     <!-- Form -->
                     <h2 class="mb-4 fw-bold">Reservasi</h2>
                     <form action="{{ route('reservation.update', $reservation->id) }}" method="POST" enctype="multipart/form-data" role="form">
@@ -76,6 +125,65 @@
                         </div>
                     </form>
 
+                    <div class="row mt-4">
+                        <div class="col">
+                            <div class="card">
+                                {{-- Pesanan --}}
+                                <div class="card-header ">
+                                    <h5>Detail Pesanan</h5>
+                                    <button type="button" class="btn btn-dark btn-sm" style="float: right;" data-bs-toggle="modal" data-bs-target="#placeOrderModal">
+                                        Buat Order Baru
+                                    </button>
+                                </div>
+
+                                <div class="card-body">
+                                    <div class="table table-responsive">
+                                        <table class="table" id="DetailPesanan">
+                                            <thead>
+                                                <tr>
+                                                    <th> No </th>
+                                                    <th> Nama Produk </th>
+                                                    <th> Harga Satuan </th>
+                                                    <th> Kuantitas </th>
+                                                    <th> catatan </th>
+                                                    <th> Aksi </th>
+                                                </tr>
+                                            </thead>
+        
+                                            <tbody>
+                                                @foreach ($reservation->products as $products)
+                                                <tr>
+                                                    <td> {{$loop->iteration}} </td>
+                                                    <td> {{ $products->name }} </td> 
+                                                    <td> Rp {{ number_format($products->price, 0, ',', '.') }} </td>
+                                                    <td> {{ $products->pivot->quantity }} </td>
+                                                    <td> {{ $products->pivot->note }} </td>
+
+                                                    <td>
+                                                        <!-- Edit -->
+                                                        <form action="{{ route('reservation.products.update', [$reservation->id, $products->id]) }}" method="POST" class="d-inline">
+                                                            @csrf
+                                                            @method('PUT')
+                                                            <input type="number" name="quantity" value="{{ $products->pivot->quantity }}" min="1" class="form-control d-inline w-25">
+                                                            <input type="text" name="note" value="{{ $products->pivot->note }}" class="form-control d-inline w-50">
+                                                            <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                                                        </form>
+
+                                                        <!-- Delete -->
+                                                        <form action="{{ route('reservation.products.destroy', [$reservation->id, $products->id]) }}" method="POST" class="d-inline">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                                                        </form>
+                                                    </td>
+                                                </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
 
                     <div class="contact-info mt-5">
                         <div class="row text-center g-4">

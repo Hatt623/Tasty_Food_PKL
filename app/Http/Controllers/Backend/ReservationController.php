@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Reservation;
 use App\Models\ReservationHistory;
+use App\Models\Product;
+use App\Models\ReservationProduct;
+
 use App\Model\User;
 
 class ReservationController extends Controller
@@ -28,9 +31,10 @@ class ReservationController extends Controller
      */
     public function show(string $id)
     {
-        $reservation = Reservation::with('user')->findOrFail($id);
+        $reservation = Reservation::with('user','products')->findOrFail($id);
         $reservationHistory = ReservationHistory::where('reservation_id', $id)->latest()->get();
-        return view('backend.reservation.show', compact('reservation', 'reservationHistory'));
+        $products = Product::latest()->get();
+        return view('backend.reservation.show', compact('reservation', 'reservationHistory','products'));
     }
 
     /**
@@ -63,7 +67,7 @@ class ReservationController extends Controller
             'staff_name'     => auth()->user()->name,
             'old_status'     => $reservation->getOriginal('status'),
             'new_status'     => $request->status,
-            'note'           => $request->note ?? '-',
+            'note'           => $request->note ?? null,
         ]);
 
         toast('Reservasi berhasil di update.', 'success');

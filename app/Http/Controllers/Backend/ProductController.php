@@ -39,12 +39,14 @@ class ProductController extends Controller
     {
         $request->validate([
             'name' => 'required|',
+            'price' => 'required|',
             'description' => 'required|max:500',
             'image'  => 'required|image|mimes:jpg,png|max:10024',
         ]);
 
         $product = new Product();
         $product ->name = $request->name;
+        $product ->price = $request->price;
         $product ->description = $request->description;
 
         if ($request->hasFile('image')) {
@@ -99,6 +101,7 @@ class ProductController extends Controller
     {
         $request->validate([
             'name' => 'required|',
+            'price' => 'required|',
             'description' => 'required|max:500',
             'image'  => 'image|mimes:jpg,png|max:10024',
             
@@ -106,6 +109,7 @@ class ProductController extends Controller
 
         $product = Product::findOrFail($id);
         $product ->name = $request->name;
+        $product ->price = $request->price;
         $product ->description = $request->description;
 
         if ($request->hasFile('image')) {

@@ -16,6 +16,7 @@ use App\Http\Controllers\Backend\ReservationController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\ReservationCSController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\ReservationProductController;
 
 
 
@@ -32,6 +33,10 @@ Route::get('/reservationSettings', [ReservationCSController::class, 'reservation
 Route::get('/reservationSettings/{id}', [ReservationCSController::class, 'edit'])->name('reservation.edit');
 Route::put('/reservationSettings/{id}', [ReservationCSController::class, 'update'])->name('reservation.update');
 Route::put('/reservationSettings/{id}/cancel', [ReservationCSController::class, 'cancel'])->name('reservation.cancel');
+
+Route::post('/reservations/{reservation}/products', [ReservationProductController::class, 'store'])->name('reservation.products.store');
+Route::put('/reservations/{reservation}/products/{product}', [ReservationProductController::class, 'update'])->name('reservation.products.update');
+Route::delete('/reservations/{reservation}/products/{product}', [ReservationProductController::class, 'destroy'])->name('reservation.products.destroy');
 
 //Reviews
 Route::post('/products/{product}/reviews', [ReviewController::class, 'store'])->middleware('auth')->name('reviews.store');

@@ -64,6 +64,12 @@
                             </div>
                         </div>
 
+                        {{-- popup menu --}}
+                        
+
+                        <!-- Modal -->
+                      
+
                         <div class="row mt-4">
                             <div class="col-12 d-grid">
                             <button type="submit" class="btn btn-dark btn-lg">BUAT RESERVASI</button>

@@ -41,6 +41,7 @@
                                         <th>Jumlah Tamu</th>
                                         <th>Status Reservasi</th>
                                         <th>Status Pembayaran</th>
+                                        <th>Order Menu</th>
                                         <th>Aksi</th>
                                         <th>Cancel</th>
                                     </tr>
@@ -54,6 +55,15 @@
                                             <td>{{ $reservation->guest_count }}</td>
                                             <td>{{ $reservation->status }}</td>
                                             <td>{{ $reservation->payment_status }}</td>
+                                            <td>
+                                                @if($reservation->status == 'cancelled' || $reservation->status == 'completed' || $reservation->status == 'confirmed')
+                                                    <span class="text-muted">-</span>
+                                                @else
+                                                <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#placeOrderModal">
+                                                    Buat Order
+                                                </button>
+                                                @endif
+                                            </td>
                                             <td>
                                                 @if($reservation->status == 'cancelled' || $reservation->status == 'completed' || $reservation->status == 'confirmed')
                                                     <span class="text-muted">-</span>
@@ -108,6 +118,57 @@
                             </div>
                         </div>
                     </div>
+
+                    {{-- pop up menu --}}
+                    @if(isset($reservation))
+                    <div class="modal fade" id="placeOrderModal" tabindex="-1" aria-labelledby="placeOrderModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-xl">
+                            <div class="modal-content">
+                            <form action="{{ route('reservation.products.store', $reservation->id) }}" method="post" enctype="multipart/form-data" role="form">
+                                @csrf
+                                <div class="modal-header">
+                                <h5 class="modal-title">Silahkan pilih menu anda</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                <table class="table table-bordered align-middle" id="placeOrderTable">
+                                    <thead class="table-light">
+                                    <tr>
+                                        <th>Gambar</th>
+                                        <th>Produk</th>
+                                        <th>Harga</th>
+                                        <th>Jumlah</th>
+                                        <th>Catatan</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @foreach($products as $index => $product)
+                                    <tr>
+                                        <td>
+                                            <img src="{{ $product->image }}" alt="{{ $product->name }}" class="img-thumbnail" width="100">
+                                        </td>
+                                        <td>{{ $product->name }}</td>
+                                        <td>Rp {{ number_format($product->price,0,',','.') }}</td>
+                                        <td>
+                                            <input type="hidden" name="products[{{ $index }}][product_id]" value="{{ $product->id }}">
+                                            <input type="number" name="products[{{ $index }}][quantity]" min="0" value="0" class="form-control">
+                                        </td>
+                                        <td>
+                                            <input type="text" name="products[{{ $index }}][note]" class="form-control" placeholder="Catatan (opsional)">
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                    </tbody>
+                                </table>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="submit" class="btn sm btn-dark">Submit Order</button>
+                                </div>
+                            </form>
+                            </div>
+                        </div>
+                    </div>
+                    @endif
                 </div>
             </div>
         </section>
@@ -135,6 +196,11 @@
     <script>
     $(document).ready(function () {
         $('#reservationTable').DataTable();
+
+        $('#placeOrderTable').DataTable({
+            info:false,
+            responsive:true
+        });
     });
     </script>
 @endpush

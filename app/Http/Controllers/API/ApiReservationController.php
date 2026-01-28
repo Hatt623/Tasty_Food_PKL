@@ -39,7 +39,7 @@ class ApiReservationController extends Controller
         }
 
         $checkReservation = Reservation::where('user_id', Auth::id())
-            ->where('status', '!=', 'completed')
+            ->whereNotIn('status', ['completed', 'cancelled'])
             ->first();
 
         if ($checkReservation) {

@@ -24,6 +24,7 @@
                                     <tr>
                                         <th> No </th>
                                         <th> Nama Produk </th>
+                                        <th> Harga </th>
                                         <th> Deskripsi </th>
                                         <th> Gambar </th>
                                         <th> Aksi </th>
@@ -37,6 +38,7 @@
                                     <tr>
                                         <td> {{$loop->iteration}} </td>
                                         <td> {{$data->name}} </td>
+                                        <td> Rp. {{ number_format($data->price, 0, ',', '.') }} </td>
                                         <td> {{Str::limit($data->description,10)}} </td>
                                         <td> <img src="{{ asset($data->image) }}" alt="{{ $data->name }}" style="width: 60px; height: auto;"> </td>                                                         
                                         

@@ -17,6 +17,12 @@
                         </div>
                         <div class="col-md-6">
                             <div class="mb-3">
+                                <label><strong>Harga Produk:</strong></label>
+                                <div>Rp. {{ number_format($product->price, 0, ',', '.') }}</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
                                 <label><strong>Deskripsi produk:</strong></label>
                                 <div>{{ $product->description }}</div>
                             </div>

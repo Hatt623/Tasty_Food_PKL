@@ -23,6 +23,18 @@
                                 </div>
 
                                 <div class="mb-2">
+                                    <label for="">Harga Produk</label>
+
+                                    <input type="text" name="price" value="{{old ('price')}}" class="form-control @error('price') is-invalid @enderror"> 
+                                    
+                                    @error('price')
+                                        <span class="invalid-feedback" role="alert">
+                                            <strong>{{ $message }}</strong>
+                                        </span>
+                                    @enderror
+                                </div>
+
+                                <div class="mb-2">
                                     <label for="description">Deskripsi Produk</label>
 
                                     <textarea name="description" cols="30" rows="10" value="{{old ('description')}}" class="form-control @error ('description') is-invalid @enderror">{{old ('description')}}</textarea>

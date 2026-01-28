@@ -2,9 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Reservation;
+use App\Models\Product;
 use App\Models\User;
+use App\Models\ReservationProduct;
+
 use Illuminate\Support\Str;
 
 use Auth;
@@ -32,7 +36,7 @@ class ReservationCSController extends Controller
         }
 
         $checkReservation = Reservation::where('user_id', Auth::id())
-            ->where('status', '!=', 'completed')
+            ->whereNotIn('status', ['completed', 'cancelled'])
             ->first();
 
         if ($checkReservation) {
@@ -108,7 +112,8 @@ class ReservationCSController extends Controller
         }
 
         $reservations = Reservation::where('user_id', Auth::id())->latest()->get();
-        return view('reservationSettingsIndex', compact('reservations'));
+        $products = Product::latest()->get();
+        return view('reservationSettingsIndex', compact('reservations', 'products'));
     }
 
      public function cancel(Request $request, string $id)
@@ -124,7 +129,14 @@ class ReservationCSController extends Controller
     public function edit(string $id)
     {
         $reservation = Reservation::findOrFail($id);
-        return view('reservationSettingsEdit', compact('reservation'));
+        
+        $products = Product::latest()->get()->map(function($product) use ($reservation) {
+            $pivot = $reservation->products->firstWhere('id', $product->id)?->pivot;
+            $product->reserved_quantity = $pivot->quantity ?? 0;
+            return $product;
+        });
+
+        return view('reservationSettingsEdit', compact('reservation', 'products'));
     }
 
     /**
