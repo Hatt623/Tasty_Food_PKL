@@ -1,4 +1,9 @@
 @extends('layouts.backend')
+
+@section('styles')
+  <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+@endsection
+
 @section('content')
     <div class="container-fluid">
         <div class="row">
@@ -19,6 +24,7 @@
                                         <strong>Nama Pelanggan:</strong><br>{{$reservation->user->name}}
                                     </div>
                                 </div>
+                                {{-- 2nd line --}}
                                 <div class="col-md-6">
                                     <div class="border rounded p-3 bg-light">
                                         <strong>Kode Reservasi:</strong><br>{{ $reservation->reserve_code }}
@@ -29,7 +35,7 @@
                                         <strong>Email Pelanggan:</strong><br>{{ $reservation->user->email }}
                                     </div>
                                 </div>
-                                {{-- 2nd line --}}
+                                {{-- 3nd line --}}
                                 <div class="col-md-4">
                                     <div class="border rounded p-3 bg-light">
                                         <strong>Tanggal Reservasi:</strong><br>{{ \Carbon\Carbon::parse($reservation->reservation_date)->format('d-m-Y') }}
@@ -47,7 +53,7 @@
                                     </div>
                                 </div>
 
-                                {{-- 3rd line --}}
+                                {{-- 4th line --}}
                                 <div class="col-md-6">
                                     <div class="border rounded p-2 bg-light">
                                         <strong>Status Reservasi:</strong><br>
@@ -78,6 +84,13 @@
                                                 {{ ucfirst($reservation->payment_status) }}
                                             </span>
                                         </span>
+                                    </div>
+                                </div>
+
+                                 {{-- 5th line --}}
+                                <div class="">
+                                    <div class="border rounded p-3 bg-light ">
+                                        <h5 style="text-decoration: underline; align-content: center">Total Harga Pesanan: RP {{ number_format($reservation->total_price,0,',','.') }}</h5>
                                     </div>
                                 </div>
                                 
@@ -136,10 +149,10 @@
                                                         <td>Rp {{ number_format($product->price,0,',','.') }}</td>
                                                         <td>
                                                             <input type="hidden" name="products[{{ $index }}][product_id]" value="{{ $product->id }}">
-                                                            <input type="number" name="products[{{ $index }}][quantity]" min="0" value="0" class="form-control">
+                                                            <input type="number" name="products[{{ $index }}][quantity]" min="0" value="{{$product->reserved_quantity}}" class="form-control">
                                                         </td>
                                                         <td>
-                                                            <input type="text" name="products[{{ $index }}][note]" class="form-control" placeholder="Catatan (opsional)">
+                                                            <input type="text" name="products[{{ $index }}][note]" value="{{$product->reserved_note}}" class="form-control" placeholder="Catatan (opsional)">
                                                         </td>
                                                     </tr>
                                                 @endforeach
@@ -147,7 +160,7 @@
                                         </table>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="submit" class="btn sm btn-dark">Submit Order</button>
+                                        <button type="submit" class="btn sm btn-info">Submit Order</button>
                                     </div>
                                 </form>
                                 </div>

@@ -88,7 +88,6 @@ class ReservationCSController extends Controller
             return redirect()->back()->withInput();
         }
 
-
         $reservation = new Reservation();
         $reservation ->user_id          = Auth::id();
         $reservation ->reserve_code       = 'RSV-' . strtoupper(Str::random(8));
@@ -112,7 +111,25 @@ class ReservationCSController extends Controller
         }
 
         $reservations = Reservation::where('user_id', Auth::id())->latest()->get();
-        $products = Product::latest()->get();
+
+        $pivotData = collect();
+        foreach ($reservations as $reservation) {
+            foreach ($reservation->products as $product) {
+                $pivotData->push([
+                    'product_id' => $product->id,
+                    'quantity'   => $product->pivot->quantity,
+                    'note'       => $product->pivot->note,
+                ]);
+            }
+        }
+
+        $products = Product::latest()->get()->map(function($product) use ($pivotData) {
+            $pivot = $pivotData->firstWhere('product_id', $product->id);
+            $product->reserved_quantity = $pivot['quantity'] ?? 0;
+            $product->reserved_note     = $pivot['note'] ?? '-';
+            return $product;
+        });
+
         return view('reservationSettingsIndex', compact('reservations', 'products'));
     }
 
@@ -133,6 +150,7 @@ class ReservationCSController extends Controller
         $products = Product::latest()->get()->map(function($product) use ($reservation) {
             $pivot = $reservation->products->firstWhere('id', $product->id)?->pivot;
             $product->reserved_quantity = $pivot->quantity ?? 0;
+            $product->reserved_note     = $pivot->note ?? '-';
             return $product;
         });
 

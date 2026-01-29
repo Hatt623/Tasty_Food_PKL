@@ -33,7 +33,12 @@ class ReservationController extends Controller
     {
         $reservation = Reservation::with('user','products')->findOrFail($id);
         $reservationHistory = ReservationHistory::where('reservation_id', $id)->latest()->get();
-        $products = Product::latest()->get();
+        $products = Product::latest()->get()->map(function($product) use ($reservation) {
+            $pivot = $reservation->products->firstWhere('id', $product->id)?->pivot;
+            $product->reserved_quantity = $pivot->quantity ?? 0;
+            $product->reserved_note     = $pivot->note ?? '-';
+            return $product;
+        });
         return view('backend.reservation.show', compact('reservation', 'reservationHistory','products'));
     }
 
@@ -67,7 +72,7 @@ class ReservationController extends Controller
             'staff_name'     => auth()->user()->name,
             'old_status'     => $reservation->getOriginal('status'),
             'new_status'     => $request->status,
-            'note'           => $request->note ?? null,
+            'note'           => $request->note ?? '-',
         ]);
 
         toast('Reservasi berhasil di update.', 'success');

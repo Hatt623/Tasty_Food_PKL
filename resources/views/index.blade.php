@@ -9,7 +9,7 @@
                 <div class="row gy-4 justify-content-center justify-content-lg-between">
                 <div class="col-lg-5 order-2 order-lg-1 d-flex flex-column justify-content-center">
                     <hr data-aos="fade-up">
-                    <h1 data-aos="fade-up">FINE FOOD</h1>
+                    <h1 data-aos="fade-up">FINE DINING</h1>
                     <h2 data-aos="fade-up">Delicacy</h2>
                     <p data-aos="fade-up" data-aos-delay="100">{{Str::limit($about->about,350)}}</p>
                     <div class="d-flex" data-aos="fade-up" data-aos-delay="200">
@@ -55,15 +55,11 @@
                         data-aos-delay="{{ 150 + ($loop->index * 100) }}"
                         >
                         <div class="card featured-card position-relative overflow-visible text-center">
-                            <img
-                            src="{{ asset($product->image) }}"
-                            alt="{{ $product->title }}"
-                            class="featured-img rounded-circle"
-                            >
+                            <img src="{{ asset($product->image) }}" alt="{{ $product->title }}" class="featured-img rounded-circle">
 
                             <div class="card-body pt-5 mt-5">
                                 <div class="featured-card-child">
-                                    <h2 class="card-title mb-2">{{ $product->name }}</h2>
+                                    <h3 class="card-title mb-2">{{ $product->name }}</h3>
                                     <p class="card-text small mb-3 mt-3">
                                         {{ Str::limit($product->description, 120) }}
                                     </p>

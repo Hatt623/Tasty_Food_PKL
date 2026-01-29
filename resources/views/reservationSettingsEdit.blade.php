@@ -60,7 +60,7 @@
                                                         <input type="number" name="products[{{ $index }}][quantity]" min="0" value="{{ $product->reserved_quantity }}" class="form-control">
                                                     </td>
                                                     <td>
-                                                        <input type="text" name="products[{{ $index }}][note]" class="form-control" placeholder="Catatan (opsional)">
+                                                        <input type="text" name="products[{{ $index }}][note]" value="{{$product->reserved_note}}" class="form-control" placeholder="Catatan (opsional)">
                                                     </td>
                                                 </tr>
                                             @endforeach
@@ -131,6 +131,8 @@
                                 {{-- Pesanan --}}
                                 <div class="card-header ">
                                     <h5>Detail Pesanan</h5>
+                                    <br>
+                                    <h5 style="text-decoration: underline;">Total Harga Pesanan Anda: RP {{ number_format($reservation->total_price,0,',','.') }}</h5>
                                     <button type="button" class="btn btn-dark btn-sm" style="float: right;" data-bs-toggle="modal" data-bs-target="#placeOrderModal">
                                         Buat Order Baru
                                     </button>
@@ -181,6 +183,13 @@
                                             </tbody>
                                         </table>
                                     </div>
+                                </div>
+                            </div>
+
+                            <div class="row mt-4">
+                                <div class="col-12 d-grid">
+                                    <button class="btn btn-dark btn-lg"><a style="color:white; text-decoration:none;" href="{{route ('reservation.settings.index')}}">Kembali</a></button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -229,3 +238,16 @@
         
     </main>
 @endsection
+
+@push('scripts')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script>
+    $(document).ready(function () {
+        $('#placeOrderTable').DataTable({
+            info:false,
+            responsive:true
+        });
+    });
+    </script>
+@endpush

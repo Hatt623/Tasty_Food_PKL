@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('guest_count');
             $table->enum('status',['pending','confirmed','cancelled','completed'])->default('pending');
             $table->enum('payment_status',['unpaid','paid'])->default('unpaid');
+            $table->integer('total_price')->default(0);
 
             $table->foreign('user_id')->references('id')->on('users');
 

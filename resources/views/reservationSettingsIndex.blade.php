@@ -34,13 +34,14 @@
                         <div class="table-responsive">
                             <table class="table table-striped table-bordered align-middle" id="reservationTable">
                                 <thead class="table-light">
-                                    <tr>
+                                    <tr style="font-size: 0.87rem;">
                                         <th>Kode Reservasi</th>
                                         <th>Tanggal</th>
                                         <th>Waktu</th>
                                         <th>Jumlah Tamu</th>
                                         <th>Status Reservasi</th>
                                         <th>Status Pembayaran</th>
+                                        <th>Total Harga</th>
                                         <th>Order Menu</th>
                                         <th>Aksi</th>
                                         <th>Cancel</th>
@@ -55,12 +56,13 @@
                                             <td>{{ $reservation->guest_count }}</td>
                                             <td>{{ $reservation->status }}</td>
                                             <td>{{ $reservation->payment_status }}</td>
+                                            <td> Rp {{ number_format($reservation->total_price,0,',','.') }} </td>
                                             <td>
                                                 @if($reservation->status == 'cancelled' || $reservation->status == 'completed' || $reservation->status == 'confirmed')
                                                     <span class="text-muted">-</span>
                                                 @else
                                                 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#placeOrderModal">
-                                                    Buat Order
+                                                    Order
                                                 </button>
                                                 @endif
                                             </td>
@@ -70,7 +72,7 @@
                                                 @else
                                                 <a href="{{ route('reservation.edit', $reservation->id) }}" 
                                                 class="btn-link-more btn btn-sm btn-light border-dark">
-                                                    Edit
+                                                    Ubah
                                                 </a>                              
                                                 @endif
                                                
@@ -151,10 +153,10 @@
                                         <td>Rp {{ number_format($product->price,0,',','.') }}</td>
                                         <td>
                                             <input type="hidden" name="products[{{ $index }}][product_id]" value="{{ $product->id }}">
-                                            <input type="number" name="products[{{ $index }}][quantity]" min="0" value="0" class="form-control">
+                                            <input type="number" name="products[{{ $index }}][quantity]" min="0" value="{{ $product->reserved_quantity }}" class="form-control">
                                         </td>
                                         <td>
-                                            <input type="text" name="products[{{ $index }}][note]" class="form-control" placeholder="Catatan (opsional)">
+                                            <input type="text" name="products[{{ $index }}][note]" value="{{ $product->reserved_note }}" class="form-control" placeholder="Catatan (opsional)">
                                         </td>
                                     </tr>
                                     @endforeach

@@ -4,6 +4,8 @@ namespace Database\Seeders;
 
 use App\Models\User;
 use App\Models\About;
+use App\Models\Product;
+use App\Models\News;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -20,6 +22,8 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UsersSeeder::class,
             AboutsSeeder::class,
+            ProductsSeeder::class,
+            NewsSeeder::class,
         ]);
         
     }

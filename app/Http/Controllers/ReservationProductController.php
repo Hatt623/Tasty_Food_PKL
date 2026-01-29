@@ -31,8 +31,18 @@ class ReservationProductController extends Controller
                         'note'     => $item['note'] ?? '-',
                     ]
                 ]);
+            } else {
+                $reservation->products()->detach($item['product_id']);
             }
         }
+
+        $total = $reservation->products->sum(function($product) {
+            return $product->price * $product->pivot->quantity;
+        });
+
+        $reservation->total_price = $total;
+        $reservation->save();
+
 
         if (Auth::user()->role == 'customer'){
             toast('Order Reservasi Berhasil Dibuat', 'success');
@@ -60,6 +70,13 @@ class ReservationProductController extends Controller
             'note'     => $request->note,
         ]);
 
+        $total = $reservation->products->sum(function($product) {
+            return $product->price * $product->pivot->quantity;
+        });
+
+        $reservation->total_price = $total;
+        $reservation->save();
+
         if (Auth::user()->role == 'customer'){
             toast('Menu reservasi anda berhasil di perbarui', 'success');
             return redirect()->route('reservation.edit', $reservationId);
@@ -75,6 +92,13 @@ class ReservationProductController extends Controller
     {
         $reservation = Reservation::findOrFail($reservationId);
         $reservation->products()->detach($productId);
+
+        $total = $reservation->products->sum(function($product) {
+            return $product->price * $product->pivot->quantity;
+        });
+
+        $reservation->total_price = $total;
+        $reservation->save();
 
         if (Auth::user()->role == 'customer'){
             toast('Menu berhasil dihapus dari reservasi', 'success');
