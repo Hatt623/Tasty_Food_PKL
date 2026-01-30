@@ -5,5 +5,5 @@
 
     <p>{{ $reply }}</p>
 
-    <p>Terimakasih<br>Delicacy Team</p>
+    <p>Terimakasih<br>Tim Delicacy</p>
 </html>

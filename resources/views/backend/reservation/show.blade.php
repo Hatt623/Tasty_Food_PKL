@@ -133,7 +133,7 @@
                                             <thead class="table-light">
                                                 <tr>
                                                     <th>Gambar</th>
-                                                    <th>Produk</th>
+                                                    <th>Menu</th>
                                                     <th>Harga</th>
                                                     <th>Jumlah</th>
                                                     <th>Catatan</th>

@@ -45,25 +45,24 @@ class ReservationCSController extends Controller
         }
 
         $request->validate([
-            'reservation_date' => 'required|date|after_or_equal:today',
-            'reservation_time' => 'required|date_format:H:i',
-            'guest_count' => 'required|integer|min:1|max:100',
-        ],
-        [
-            'reservation_date.required'       => 'Tanggal reservasi wajib diisi',
-            'reservation_date.date'           => 'Tanggal reservasi harus berupa format tanggal yang valid',
-            'reservation_date.after_or_equal' => 'Tanggal reservasi tidak boleh sebelum hari ini',
+                'reservation_date' => 'required|date|after_or_equal:today',
+                'reservation_time' => 'required|date_format:H:i',
+                'guest_count' => 'required|integer|min:1|max:100',
+            ],
+            [
+                'reservation_date.required'       => 'Tanggal reservasi wajib diisi',
+                'reservation_date.date'           => 'Tanggal reservasi harus berupa format tanggal yang valid',
+                'reservation_date.after_or_equal' => 'Tanggal reservasi tidak boleh sebelum hari ini',
 
-            'reservation_time.required'       => 'Waktu reservasi wajib diisi',
-            'reservation_time.date_format'    => 'Format waktu harus HH:MM (contoh: 18:30)',
+                'reservation_time.required'       => 'Waktu reservasi wajib diisi',
+                'reservation_time.date_format'    => 'Format waktu harus HH:MM (contoh: 18:30)',
 
-            'guest_count.required' => 'Jumlah tamu wajib diisi',
-            'guest_count.integer'  => 'Jumlah tamu harus berupa angka',
-            'guest_count.min'      => 'Jumlah tamu minimal adalah 1',
-            'guest_count.max'      => 'Jumlah tamu tidak boleh lebih dari 100',
-        ]        
+                'guest_count.required' => 'Jumlah tamu wajib diisi',
+                'guest_count.integer'  => 'Jumlah tamu harus berupa angka',
+                'guest_count.min'      => 'Jumlah tamu minimal adalah 1',
+                'guest_count.max'      => 'Jumlah tamu tidak boleh lebih dari 100',
+            ]        
         );
-
        
         $dayOfWeek = Carbon::parse($request->reservation_date)->dayOfWeek; 
         if ($dayOfWeek == 0) {
@@ -133,7 +132,7 @@ class ReservationCSController extends Controller
         return view('reservationSettingsIndex', compact('reservations', 'products'));
     }
 
-     public function cancel(Request $request, string $id)
+    public function cancel(Request $request, string $id)
     {
         $reservation = Reservation::findOrFail($id);
         $reservation->status = 'cancelled';
