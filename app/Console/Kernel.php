@@ -28,9 +28,7 @@ class Kernel extends ConsoleKernel
 
         $schedule->call(function () {
             $now = Carbon::now();
-            $reservations = Reservation::where('status', 'pending')
-                ->where('reservation_time', '<=', $now->subHours(2))
-                ->get();
+            $reservations = Reservation::where('status', 'pending')->where('reservation_time', '<=', $now->subHours(2))->get();
 
             foreach ($reservations as $reservation) {
                 $reservation->status = 'cancelled';

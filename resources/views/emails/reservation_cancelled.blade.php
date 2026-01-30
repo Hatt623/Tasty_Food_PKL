@@ -8,7 +8,7 @@
     <h2>Halo {{ $reservation->user->name }},</h2>
     <p>
         Kami informasikan bahwa reservasi Anda dengan kode <strong>{{ $reservation->reserve_code }}</strong> 
-        pada <strong>{{ $reservation->reservation_time->format('d M Y H:i') }}</strong> 
+        pada <strong>{{ \Carbon\Carbon::parse($reservation->reservation_time)->format('d M Y H:i') }}</strong> 
         telah <strong>dibatalkan</strong> karena Anda tidak hadir dalam waktu 2 jam.
     </p>
     <p>
