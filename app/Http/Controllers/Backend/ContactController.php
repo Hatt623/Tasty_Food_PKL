@@ -43,10 +43,8 @@ class ContactController extends Controller
             'reply' => 'required|string|max:1000',
         ]);
 
-        // Kirim email ke customer
         Mail::to($contact->email)->send(new ContactReplyMail($contact, $request->reply));
 
-        // Opsional: simpan balasan di DB
         $contact->update(['reply' => $request->reply]);
 
         toast('Balasan berhasil dikirim', 'success');

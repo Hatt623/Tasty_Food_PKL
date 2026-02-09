@@ -27,4 +27,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [\App\Http\Controllers\API\AuthController::class, 'logout']);
 
     Route::resource('reservations', \App\Http\Controllers\API\ApiReservationController::class);
+
+    Route::prefix('reservations/{reservation}')->group(function () {
+        Route::post('products', [ApiReservationProductController::class, 'store']);
+        Route::put('products/{product}', [ApiReservationProductController::class, 'update']);
+        Route::delete('products/{product}', [ApiReservationProductController::class, 'destroy']);
+    });
 });

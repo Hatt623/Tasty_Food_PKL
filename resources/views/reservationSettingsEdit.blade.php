@@ -37,35 +37,37 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <table class="table table-bordered align-middle" id="placeOrderTable">
-                                        <thead class="table-light">
-                                        <tr>
-                                            <th>Gambar</th>
-                                            <th>Menu</th>
-                                            <th>Harga</th>
-                                            <th>Jumlah</th>
-                                            <th>Catatan</th>
-                                        </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach($products as $index => $product)
-                                                <tr>
-                                                    <td>
-                                                        <img src="../../{{$product->image }}" alt="{{ $product->name }}" class="img-thumbnail" width="100">
-                                                    </td>
-                                                    <td>{{ $product->name }}</td>
-                                                    <td>Rp {{ number_format($product->price,0,',','.') }}</td>
-                                                    <td>
-                                                        <input type="hidden" name="products[{{ $index }}][product_id]" value="{{ $product->id }}">
-                                                        <input type="number" name="products[{{ $index }}][quantity]" min="0" value="{{ $product->reserved_quantity }}" class="form-control">
-                                                    </td>
-                                                    <td>
-                                                        <input type="text" name="products[{{ $index }}][note]" value="{{$product->reserved_note}}" class="form-control" placeholder="Catatan (opsional)">
-                                                    </td>
-                                                </tr>
-                                            @endforeach
-                                        </tbody>
-                                    </table>
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered align-middle" id="placeOrderTable">
+                                            <thead class="table-light">
+                                            <tr>
+                                                <th>Gambar</th>
+                                                <th>Menu</th>
+                                                <th>Harga</th>
+                                                <th>Jumlah</th>
+                                                <th>Catatan</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach($products as $index => $product)
+                                                    <tr>
+                                                        <td>
+                                                            <img src="../../{{$product->image }}" alt="{{ $product->name }}" class="img-thumbnail img-fluid" width="100">
+                                                        </td>
+                                                        <td>{{ $product->name }}</td>
+                                                        <td>Rp {{ number_format($product->price,0,',','.') }}</td>
+                                                        <td>
+                                                            <input type="hidden" name="products[{{ $index }}][product_id]" value="{{ $product->id }}">
+                                                            <input type="number" name="products[{{ $index }}][quantity]" min="0" value="{{ $product->reserved_quantity }}" class="form-control">
+                                                        </td>
+                                                        <td>
+                                                            <input type="text" name="products[{{ $index }}][note]" value="{{$product->reserved_note}}" class="form-control" placeholder="Catatan (opsional)">
+                                                        </td>
+                                                    </tr>
+                                                @endforeach
+                                            </tbody>
+                                        </table>
+                                    </div>  
                                 </div>
                                 <div class="modal-footer">
                                     <button type="submit" class="btn sm btn-dark">Submit Order</button>
