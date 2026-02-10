@@ -4,7 +4,6 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
 use App\Models\Reservation;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -16,21 +15,19 @@ class ApiReservationController extends Controller
     public function index(Request $request)
     {
         $userId = $request->user()->id;
-        $reservations = Reservation::where('user_id', $userId)->latest()->get();
-        $res = [
+        $reservations = Reservation::with('products')->where('user_id', $userId)->latest()->get();
+
+        return response()->json([
             'success' => true,
-            'data' => $reservations,
+            'data' => $reservations->map(function ($reservation) {
+                return $this->formatReservation($reservation);
+            }),
             'message' => 'Data list Reservasi',
-        ];
-        return response()->json($res, 200);
+        ], 200);
     }
 
     public function store(Request $request)
     {
-        // debugging logs (fixed)
-        // \Log::info('DATE', [$request->reservation_date]);
-        // \Log::info('TIME', [$request->reservation_time]);
-
         if (!Auth::check()) {
             return response()->json([
                 'success' => false,
@@ -53,17 +50,13 @@ class ApiReservationController extends Controller
             'reservation_date' => 'required|date|after_or_equal:today',
             'reservation_time' => 'required|date_format:H:i',
             'guest_count'      => 'required|integer|min:1|max:100',
-        ],
-        [
-            'guest_count.max' => 'Jumlah tamu tidak boleh lebih dari 100',
-            'guest_count.min' => 'Jumlah tamu minimal adalah 1'
-        ]
-        );
+        ]);
 
         if ($validator->fails()) {
             return response()->json([
+                'success' => false,
                 'errors' => $validator->errors(),
-                'data' => $request->all()
+                'message' => 'Validasi gagal'
             ], 400);
         }
 
@@ -88,7 +81,7 @@ class ApiReservationController extends Controller
 
         $reservationDateTime = Carbon::createFromFormat(
             'Y-m-d H:i',
-            trim($request->reservation_date).' '.trim($request->reservation_time),
+            trim($request->reservation_date) . ' ' . trim($request->reservation_time),
             'Asia/Jakarta'
         );
 
@@ -103,7 +96,7 @@ class ApiReservationController extends Controller
 
         $reservation = new Reservation();
         $reservation->user_id = Auth::id();
-        $reservation->reserve_code = 'RSV-'.strtoupper(Str::random(8));
+        $reservation->reserve_code = 'RSV-' . strtoupper(Str::random(8));
         $reservation->reservation_date = $request->reservation_date;
         $reservation->reservation_time = $request->reservation_time;
         $reservation->guest_count = $request->guest_count;
@@ -113,27 +106,30 @@ class ApiReservationController extends Controller
 
         return response()->json([
             'success' => true,
-            'data' => $reservation,
-            'message' => 'Store reservation'
+            'data' => $this->formatReservation($reservation->load('products')),
+            'message' => 'Reservasi berhasil dibuat'
         ], 201);
     }
-
 
     public function show(Request $request, $id)
     {
         $userId = $request->user()->id;
-        $reservation = Reservation::where('user_id', $userId)->latest()->get();
-        if (! $reservation) {
-            return response()->json([
-                'message' => 'Data tidak ditemukan',
-            ], 400);
-       }
+        $reservation = Reservation::with('products')
+            ->where('user_id', $userId)
+            ->find($id);
 
-       return response()->json([
-        'success'=> true,
-        'data' => $reservation,
-        'message' => 'Lihat data reservasi'
-       ], 200);
+        if (!$reservation) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data tidak ditemukan',
+            ], 404);
+        }
+
+        return response()->json([
+            'success' => true,
+            'data' => $this->formatReservation($reservation),
+            'message' => 'Lihat data reservasi'
+        ], 200);
     }
 
     public function update(Request $request, string $id)
@@ -156,7 +152,8 @@ class ApiReservationController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'success' => false,
-                'errors'  => $validator->errors()
+                'errors'  => $validator->errors(),
+                'message' => 'Validasi gagal'
             ], 400);
         }
 
@@ -181,7 +178,7 @@ class ApiReservationController extends Controller
 
         $reservationDateTime = Carbon::createFromFormat(
             'Y-m-d H:i',
-            trim($request->reservation_date).' '.trim($request->reservation_time),
+            trim($request->reservation_date) . ' ' . trim($request->reservation_time),
             'Asia/Jakarta'
         );
 
@@ -197,16 +194,36 @@ class ApiReservationController extends Controller
         $reservation->reservation_date = $request->reservation_date;
         $reservation->reservation_time = $request->reservation_time;
         $reservation->guest_count      = $request->guest_count;
-        $reservation ->status          = 'pending';
-        $reservation ->payment_status  = 'unpaid';
+        $reservation->status           = 'pending';
+        $reservation->payment_status   = 'unpaid';
         $reservation->save();
-
-        $reservation = Reservation::with(['user'])->find($reservation->id);
 
         return response()->json([
             'success' => true,
-            'data'    => $reservation,
+            'data'    => $this->formatReservation($reservation->load('products')),
             'message' => 'Reservasi berhasil diperbarui'
         ], 200);
+    }
+
+    public function formatReservation($reservation)
+    {
+        return [
+            'id' => $reservation->id,
+            'reserve_code' => $reservation->reserve_code,
+            'reservation_date' => $reservation->reservation_date,
+            'reservation_time' => $reservation->reservation_time,
+            'guest_count' => $reservation->guest_count,
+            'status' => $reservation->status,
+            'payment_status' => $reservation->payment_status,
+            'products' => $reservation->products->map(function ($product) {
+                return [
+                    'id' => $product->id,
+                    'name' => $product->name,
+                    'quantity' => $product->pivot->quantity,
+                    'note' => $product->pivot->note,
+                    'subtotal' => $product->price * $product->pivot->quantity,
+                ];
+            }),
+        ];
     }
 }

@@ -28,9 +28,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::resource('reservations', \App\Http\Controllers\API\ApiReservationController::class);
 
-    Route::prefix('reservations/{reservation}')->group(function () {
-        Route::post('products', [ApiReservationProductController::class, 'store']);
-        Route::put('products/{product}', [ApiReservationProductController::class, 'update']);
-        Route::delete('products/{product}', [ApiReservationProductController::class, 'destroy']);
-    });
+    Route::get('/reservations/{reservation}/products', [\App\Http\Controllers\API\ApiReservationProductController::class, 'index']);
+    Route::post('/reservations/{reservation}/products', [\App\Http\Controllers\API\ApiReservationProductController::class, 'store']);
+    Route::patch('/reservations/{reservation}/products/{product}', [\App\Http\Controllers\API\ApiReservationProductController::class, 'update']);
+    Route::delete('/reservations/{reservation}/products/{product}', [\App\Http\Controllers\API\ApiReservationProductController::class, 'destroy']);
 });

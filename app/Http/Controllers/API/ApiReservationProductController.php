@@ -9,6 +9,25 @@ use Illuminate\Support\Facades\Validator;
 
 class ApiReservationProductController extends Controller
 {
+    public function index($reservationId)
+    {
+        $reservation = Reservation::with('products')->findOrFail($reservationId);
+
+        return response()->json([
+            'success' => true,
+            'data' => $reservation->products->map(function ($product) {
+                return [
+                    'id' => $product->id,
+                    'name' => $product->name,
+                    'quantity' => $product->pivot->quantity,
+                    'note' => $product->pivot->note,
+                    'subtotal' => $product->price * $product->pivot->quantity,
+                ];
+            }),
+            'message' => 'List of products for reservation'
+        ], 200);
+    }
+
     public function store(Request $request, $reservationId)
     {
         $reservation = Reservation::findOrFail($reservationId);
