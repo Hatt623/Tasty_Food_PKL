@@ -27,6 +27,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [\App\Http\Controllers\API\AuthController::class, 'logout']);
 
     Route::resource('reservations', \App\Http\Controllers\API\ApiReservationController::class);
+    Route::post('reservations/{reservation}/cancel', [\App\Http\Controllers\API\ApiReservationController::class, 'cancel']);
 
     Route::get('/reservations/{reservation}/products', [\App\Http\Controllers\API\ApiReservationProductController::class, 'index']);
     Route::post('/reservations/{reservation}/products', [\App\Http\Controllers\API\ApiReservationProductController::class, 'store']);

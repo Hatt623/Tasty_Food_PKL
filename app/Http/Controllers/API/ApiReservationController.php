@@ -132,6 +132,28 @@ class ApiReservationController extends Controller
         ], 200);
     }
 
+    public function cancel(Request $request, string $id)
+    {
+        $userId = $request->user()->id;
+        $reservation = Reservation::where('user_id', $userId)->find($id);
+
+        if (!$reservation) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Data tidak ditemukan',
+            ], 404);
+        }
+
+        $reservation->status = 'cancelled';
+        $reservation->save();
+
+        return response()->json([
+            'success' => true,
+            'data' => $this->formatReservation($reservation),
+            'message' => 'Reservasi berhasil dibatalkan'
+        ], 200);
+    }
+
     public function update(Request $request, string $id)
     {
         if (!Auth::check()) {
