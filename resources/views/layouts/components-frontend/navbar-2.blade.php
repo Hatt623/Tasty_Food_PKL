@@ -20,6 +20,7 @@
             <li class="dropdown">
               <a href="#"><span>Kelola</span> <i class="bi bi-chevron-down"></i></a>
               <ul>
+               <li><a href="{{ route('profile.edit', Auth::user()->id) }}">Kelola Profile</a></li>
                 <li><a href="{{ route('reservation.settings.index') }}">Kelola Reservasi</a></li>
                 <li><a href="/logout" onclick="return confirm('Apakah Anda yakin ingin keluar?')">Logout</a></li>
               </ul>

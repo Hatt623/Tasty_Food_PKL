@@ -55,6 +55,34 @@ class StaffsController extends Controller
         return redirect()->route('backend.staff.index');
     }
 
+    public function edit(string $id)
+    {
+        $user = User::findOrFail($id);
+        return view('backend.staff.edit', compact('user'));
+    }
+
+    public function update(Request $request, string $id)
+    {
+        $request->validate([
+            'name'     => 'required|string|max:255',
+            'email'    => 'required|string|email|max:255|unique:users,email,' . $id,
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $user = User::findOrFail($id);
+        $user->update([
+            'name'     => $request->name,
+            'email'    => $request->email,
+            'password' => Hash::make($request->password),
+            'phone'    => $request->phone,
+            'role'     => 'staff', 
+        ]);
+
+        $user->save();
+        toast('Data berhasil diubah', 'success');
+        return redirect()->route('backend.staff.index');
+    }
+
     /**
      * Remove the specified resource from storage.
      */

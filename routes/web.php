@@ -17,6 +17,7 @@ use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\ReservationCSController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ReservationProductController;
+use App\Http\Controllers\ProfileController;
 
 
 
@@ -26,6 +27,11 @@ Route::get('/about',[FrontendController::class, 'about'])->name('about.index');
 Route::get('/news',[FrontendController::class, 'news'])->name('news.index');
 Route::get('/contact',[FrontendController::class, 'contact'])->name('contact.index');
 Route::get('/newsRead/{id}', [FrontendController::class, 'newsRead'])->name('newsRead.show');
+Route::get('/profile/{id}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
+Route::put('/profile/{id}', [ProfileController::class, 'update'])->name('profile.update');
+Route::delete('/profile/{id}', [ProfileController::class, 'destroy'])->name('profile.destroy');
+Route::get('/profile/{id}/edit-password', [ProfileController::class, 'profileEditPassword'])->name('profileEditPassword');
+Route::put('/profile/{id}/update-password', [ProfileController::class, 'updatePassword'])->name('profileupdatePassword');
 
 Route::get('/reservation', [ReservationCSController::class, 'index'])->name('reservation.index');
 Route::post('/reservation', [ReservationCSController::class, 'store'])->name('reservation.store');

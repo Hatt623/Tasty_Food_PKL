@@ -9,21 +9,23 @@
                 <!-- Card -->
                 <div class="card shadow-sm border-0 rounded-3 mt-5 pt-5">
                     <div class="card-header bg-warning text-dark text-center py-3">
-                        <h4 class="mb-0">Delicacy Register</h4>
+                        <h4 class="mb-0">Silahkan Edit Profil Anda</h4>
                     </div>
 
                     <div class="card-body p-4">
-                        <form method="POST" action="{{ route('register') }}">
+                        <form method="POST" action="{{ route('profile.update', $user->id) }}">
                             @csrf
+                            @method('PUT')
+
                             <!-- Name -->
                             <div class="mb-3">
                                 <label for="name" class="form-label">Name</label>
                                 <input id="name" 
                                        type="name" 
                                        name="name" 
-                                       value="{{ old('name') }}" 
+                                       value="{{ old('name', $user->name) }}" 
                                        class="form-control @error('name') is-invalid @enderror" 
-                                       placeholder="Masukkan Nama anda" 
+                                       placeholder="Masukkan Nama Baru anda" 
                                        required 
                                        autofocus>
                                 @error('name')
@@ -37,9 +39,9 @@
                                 <input id="email" 
                                        type="email" 
                                        name="email"
-                                       value="{{ old('email') }}" 
+                                       value="{{ old('email', $user->email) }}" 
                                        class="form-control @error('email') is-invalid @enderror" 
-                                       placeholder="Masukkan Email anda" 
+                                       placeholder="Masukkan Email Baru anda" 
                                        required>
                                 @error('email')
                                     <div class="invalid-feedback">{{ $message }}</div>
@@ -52,48 +54,21 @@
                                 <input id="phone" 
                                        type="phone" 
                                        name="phone"
-                                       value="{{ old('phone') }}" 
+                                       value="{{ old('phone', $user->phone) }}" 
                                        class="form-control @error('phone') is-invalid @enderror" 
-                                       placeholder="Masukkan Nomor Telepon Anda" 
+                                       placeholder="Masukkan Nomor Telepon Baru Anda" 
                                        required>
                                 @error('phone')
                                     <div class="invalid-feedback">{{ $message }}</div>
                                 @enderror
                             </div>
 
-                            <!-- Password -->
-                            <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
-                                <input id="password" 
-                                       type="password" 
-                                       name="password"
-                                       value="{{ old('password') }}" 
-                                       class="form-control @error('password') is-invalid @enderror" 
-                                       placeholder="Masukkan Password anda" 
-                                       required>
-                                @error('password')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
-
-                            <!-- Password_confirmation -->
-                            <div class="mb-3">
-                                <label for="password-confirm" class="form-label">Password Confirmation</label>
-                                <input id="password-confirm" 
-                                       type="password" 
-                                       name="password_confirmation" 
-                                       class="form-control @error('password_confirmation') is-invalid @enderror" 
-                                       placeholder="Masukkan Ulang Password Anda" 
-                                       required>
-                                @error('password_confirmation')
-                                    <div class="invalid-feedback">{{ $message }}</div>
-                                @enderror
-                            </div>
+                           
 
                             <!-- Submit Button -->
                             <div class="d-grid mb-3">
-                                <button type="submit" class="btn btn-dark btn-lg">Register</button>
-                                <a href="/login" class="btn btn-outline-dark btn-lg mt-2">Login</a>
+                                <a href="{{ route('profileEditPassword', $user->id) }}" class="btn btn-outline-dark btn-lg mb-5">Ubah Password</a>
+                                <button type="submit" class="btn btn-dark btn-lg">Update Profile</button>
                             </div>
 
                         </form>

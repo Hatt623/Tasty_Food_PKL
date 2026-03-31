@@ -45,6 +45,11 @@
                                                     Tampilkan
                                                 </a> |
 
+                                                <a href="{{ route('backend.staff.edit', $data->id) }}"
+                                                    class="btn btn-sm btn-primary">
+                                                    Edit
+                                                </a> |
+
                                                 @if(auth()->user()->role == 'admin' && auth()->id() != $data->id)
                                                     <a href="{{ route('backend.staff.destroy', $data->id) }}"
                                                         class="btn btn-sm btn-danger"
