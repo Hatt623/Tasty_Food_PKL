@@ -136,55 +136,117 @@
                                     <br>
                                     <h5 style="text-decoration: underline;">Total Harga Pesanan Anda: RP {{ number_format($reservation->total_price,0,',','.') }}</h5>
                                     <button type="button" class="btn btn-dark btn-sm" style="float: right;" data-bs-toggle="modal" data-bs-target="#placeOrderModal">
-                                        Buat Order Baru
+                                        Buat/Update Order Baru
                                     </button>
                                 </div>
 
                                 <div class="card-body">
-                                    <div class="table table-responsive">
-                                        <table class="table" id="DetailPesanan">
-                                            <thead>
-                                                <tr>
-                                                    <th> No </th>
-                                                    <th> Nama Produk </th>
-                                                    <th> Harga Satuan </th>
-                                                    <th> Kuantitas </th>
-                                                    <th> catatan </th>
-                                                    <th> Aksi </th>
-                                                </tr>
-                                            </thead>
-        
-                                            <tbody>
-                                                @foreach ($reservation->products as $products)
-                                                <tr>
-                                                    <td> {{$loop->iteration}} </td>
-                                                    <td> {{ $products->name }} </td> 
-                                                    <td> Rp {{ number_format($products->price, 0, ',', '.') }} </td>
-                                                    <td> {{ $products->pivot->quantity }} </td>
-                                                    <td> {{ $products->pivot->note }} </td>
 
-                                                    <td>
-                                                        <!-- Edit -->
-                                                        <form action="{{ route('reservation.products.update', [$reservation->id, $products->id]) }}" method="POST" class="d-inline">
-                                                            @csrf
-                                                            @method('PUT')
-                                                            <input type="number" name="quantity" value="{{ $products->pivot->quantity }}" min="1" class="form-control d-inline w-25">
-                                                            <input type="text" name="note" value="{{ $products->pivot->note }}" class="form-control d-inline w-50">
-                                                            <button type="submit" class="btn btn-sm btn-primary">Update</button>
-                                                        </form>
-
-                                                        <!-- Delete -->
-                                                        <form action="{{ route('reservation.products.destroy', [$reservation->id, $products->id]) }}" method="POST" class="d-inline">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
-                                                        </form>
-                                                    </td>
-                                                </tr>
-                                                @endforeach
-                                            </tbody>
-                                        </table>
+                                    {{-- Desktop Ver--}}
+                                    <div class="d-none d-md-block">
+                                        <div class="table-responsive">
+                                            <table class="table" id="DetailPesanan">
+                                                <thead>
+                                                    <tr>
+                                                        <th> No </th>
+                                                        <th> Nama Produk </th>
+                                                        <th> Harga Satuan </th>
+                                                        <th> Kuantitas </th>
+                                                        <th> Catatan </th>
+                                                        <th> Aksi </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach ($reservation->products as $products)
+                                                    <tr>
+                                                        <td>{{ $loop->iteration }}</td>
+                                                        <td>{{ $products->name }}</td>
+                                                        <td>Rp {{ number_format($products->price, 0, ',', '.') }}</td>
+                                                        <td>{{ $products->pivot->quantity }}</td>
+                                                        <td>
+                                                            <button type="button" class="btn btn-dark btn-sm" data-bs-toggle="modal" data-bs-target="#seeNoteModal{{ $products->id }}">
+                                                                Lihat Catatan
+                                                            </button>
+                                                            
+                                                            <div class="modal fade" id="seeNoteModal{{ $products->id }}" tabindex="-1" aria-hidden="true">
+                                                                <div class="modal-dialog modal-dialog-centered">
+                                                                    <div class="modal-content">
+                                                                        <div class="modal-header">
+                                                                            <h5 class="modal-title">Catatan: {{ $products->name }}</h5>
+                                                                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                                        </div>
+                                                                        <div class="modal-body">
+                                                                            <p>{{ $products->pivot->note ?? '-' }}</p>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <form action="{{ route('reservation.products.update', [$reservation->id, $products->id]) }}" method="POST" class="d-inline">
+                                                                @csrf @method('PUT')
+                                                                <input type="number" name="quantity" value="{{ $products->pivot->quantity }}" class="form-control d-inline w-25" min="1">
+                                                                <button type="submit" class="btn btn-sm btn-primary">Update</button>
+                                                            </form>
+                                                            <form action="{{ route('reservation.products.destroy', [$reservation->id, $products->id]) }}" method="POST" class="d-inline">
+                                                                @csrf @method('DELETE')
+                                                                <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
+                                                            </form>
+                                                        </td>
+                                                    </tr>
+                                                    @endforeach
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
+
+                                    {{-- Mobile ver --}}
+                                    <div class="d-md-none">
+                                        @foreach ($reservation->products as $products)
+                                        <div class="card mb-3 border shadow-sm">
+                                            <div class="card-body">
+                                                <div class="d-flex justify-content-between align-items-start mb-2">
+                                                    <div>
+                                                        <h6 class="fw-bold mb-0">{{ $products->name }}</h6>
+                                                        <small class="text-muted">Rp {{ number_format($products->price, 0, ',', '.') }} / item</small>
+                                                    </div>
+                                                    <span class="badge bg-dark rounded-pill">x{{ $products->pivot->quantity }}</span>
+                                                </div>
+
+                                                <div class="bg-light p-2 rounded mb-3 small">
+                                                    <strong>Catatan:</strong> {{ $products->pivot->note ?? '-' }}
+                                                </div>
+
+                                                <div class="d-flex gap-2">
+                                                    <button class="btn btn-outline-primary btn-sm flex-grow-1" data-bs-toggle="collapse" data-bs-target="#editMobile{{ $products->id }}">
+                                                        Edit
+                                                    </button>
+                                                    <form action="{{ route('reservation.products.destroy', [$reservation->id, $products->id]) }}" method="POST" class="flex-grow-1">
+                                                        @csrf @method('DELETE')
+                                                        <button class="btn btn-outline-danger btn-sm w-100">Hapus</button>
+                                                    </form>
+                                                </div>
+
+                                                {{-- collapse  --}}
+                                                <div class="collapse mt-3" id="editMobile{{ $products->id }}">
+                                                    <form action="{{ route('reservation.products.update', [$reservation->id, $products->id]) }}" method="POST" class="border-top pt-3">
+                                                        @csrf @method('PUT')
+                                                        <div class="mb-2">
+                                                            <label class="form-label small">Jumlah</label>
+                                                            <input type="number" name="quantity" value="{{ $products->pivot->quantity }}" class="form-control form-control-sm" min="1">
+                                                        </div>
+                                                        <div class="mb-2">
+                                                            <label class="form-label small">Catatan Baru</label>
+                                                            <input type="text" name="note" value="{{ $products->pivot->note }}" class="form-control form-control-sm">
+                                                        </div>
+                                                        <button type="submit" class="btn btn-primary btn-sm w-100">Simpan</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        @endforeach
+                                    </div>
+
                                 </div>
                             </div>
 

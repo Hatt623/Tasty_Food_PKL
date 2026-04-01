@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('reservation_id');
             $table->unsignedBigInteger('product_id');
             $table->integer('quantity');
-            $table->string('note');
+            $table->string('note')->nullable();
 
             $table->foreign('reservation_id')->references('id')->on('reservations');
             $table->foreign('product_id')->references('id')->on('products');

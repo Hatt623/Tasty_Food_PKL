@@ -25,14 +25,19 @@
                                     </div>
                                 </div>
                                 {{-- 2nd line --}}
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="border rounded p-3 bg-light">
                                         <strong>Kode Reservasi:</strong><br>{{ $reservation->reserve_code }}
                                     </div>
                                 </div>
-                                <div class="col-md-6">
+                                <div class="col-md-4">
                                     <div class="border rounded p-3 bg-light">
                                         <strong>Email Pelanggan:</strong><br>{{ $reservation->user->email }}
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="border rounded p-3 bg-light">
+                                        <strong>Telepon Pelanggan:</strong><br>{{ $reservation->user->phone }}
                                     </div>
                                 </div>
                                 {{-- 3nd line --}}
@@ -169,8 +174,9 @@
                             </div>
                         </div>
 
-                        <div class="card-body">
-                            <div class="table table-responsive">
+                       {{-- Desktop Ver--}}
+                        <div class="d-none d-md-block">
+                            <div class="table-responsive">
                                 <table class="table" id="DetailPesanan">
                                     <thead>
                                         <tr>
@@ -182,30 +188,40 @@
                                             <th> Aksi </th>
                                         </tr>
                                     </thead>
- 
                                     <tbody>
                                         @foreach ($reservation->products as $products)
                                         <tr>
-                                            <td> {{$loop->iteration}} </td>
-                                            <td> {{ $products->name }} </td> 
-                                            <td> Rp {{ number_format($products->price, 0, ',', '.') }} </td>
-                                            <td> {{ $products->pivot->quantity }} </td>
-                                            <td> {{ $products->pivot->note }} </td>
-
+                                            <td>{{ $loop->iteration }}</td>
+                                            <td>{{ $products->name }}</td>
+                                            <td>Rp {{ number_format($products->price, 0, ',', '.') }}</td>
+                                            <td>{{ $products->pivot->quantity }}</td>
                                             <td>
-                                                <!-- Edit -->
+                                                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#seeNoteModal{{ $products->id }}">
+                                                    Lihat Catatan
+                                                </button>
+                                                
+                                                <div class="modal fade" id="seeNoteModal{{ $products->id }}" tabindex="-1" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">Catatan: {{ $products->name }}</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p>{{ $products->pivot->note ?? '-' }}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                            <td>
                                                 <form action="{{ route('reservation.products.update', [$reservation->id, $products->id]) }}" method="POST" class="d-inline">
-                                                    @csrf
-                                                    @method('PUT')
-                                                    <input type="number" name="quantity" value="{{ $products->pivot->quantity }}" min="1" class="form-control d-inline w-25">
-                                                    <input type="text" name="note" value="{{ $products->pivot->note }}" class="form-control d-inline w-50">
+                                                    @csrf @method('PUT')
+                                                    <input type="number" name="quantity" value="{{ $products->pivot->quantity }}" class="form-control d-inline w-25" min="1">
                                                     <button type="submit" class="btn btn-sm btn-primary">Update</button>
                                                 </form>
-
-                                                <!-- Delete -->
                                                 <form action="{{ route('reservation.products.destroy', [$reservation->id, $products->id]) }}" method="POST" class="d-inline">
-                                                    @csrf
-                                                    @method('DELETE')
+                                                    @csrf @method('DELETE')
                                                     <button type="submit" class="btn btn-sm btn-danger">Hapus</button>
                                                 </form>
                                             </td>
@@ -214,7 +230,54 @@
                                     </tbody>
                                 </table>
                             </div>
-                    </div>
+                        </div>
+
+                        {{-- Mobile ver --}}
+                        <div class="d-md-none">
+                            @foreach ($reservation->products as $products)
+                            <div class="card mb-3 border shadow-sm">
+                                <div class="card-body">
+                                    <div class="d-flex justify-content-between align-items-start mb-2">
+                                        <div>
+                                            <h6 class="fw-bold mb-0">{{ $products->name }}</h6>
+                                            <small class="text-muted">Rp {{ number_format($products->price, 0, ',', '.') }} / item</small>
+                                        </div>
+                                        <span class="badge bg-primary rounded-pill">x{{ $products->pivot->quantity }}</span>
+                                    </div>
+
+                                    <div class="bg-light p-2 rounded mb-3 small">
+                                        <strong>Catatan:</strong> {{ $products->pivot->note ?? '-' }}
+                                    </div>
+
+                                    <div class="d-flex gap-2">
+                                        <button class="btn btn-outline-primary btn-sm flex-grow-1" data-bs-toggle="collapse" data-bs-target="#editMobile{{ $products->id }}">
+                                            Edit
+                                        </button>
+                                        <form action="{{ route('reservation.products.destroy', [$reservation->id, $products->id]) }}" method="POST" class="flex-grow-1">
+                                            @csrf @method('DELETE')
+                                            <button class="btn btn-outline-danger btn-sm w-100">Hapus</button>
+                                        </form>
+                                    </div>
+
+                                    {{-- collapse  --}}
+                                    <div class="collapse mt-3" id="editMobile{{ $products->id }}">
+                                        <form action="{{ route('reservation.products.update', [$reservation->id, $products->id]) }}" method="POST" class="border-top pt-3">
+                                            @csrf @method('PUT')
+                                            <div class="mb-2">
+                                                <label class="form-label small">Jumlah</label>
+                                                <input type="number" name="quantity" value="{{ $products->pivot->quantity }}" class="form-control form-control-sm" min="1">
+                                            </div>
+                                            <div class="mb-2">
+                                                <label class="form-label small">Catatan Baru</label>
+                                                <input type="text" name="note" value="{{ $products->pivot->note }}" class="form-control form-control-sm">
+                                            </div>
+                                            <button type="submit" class="btn btn-primary btn-sm w-100">Simpan</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach
+                        </div>
                 </div>
             </div>
 
@@ -241,14 +304,33 @@
                                     </thead>
 
                                     <tbody>
-                                        @foreach ($reservationHistory as $products)
+                                        @foreach ($reservationHistory as $History)
                                         <tr>
                                             <td> {{$loop->iteration}} </td>
-                                            <td> {{ $products->old_status }} </td>
-                                            <td> {{ $products->new_status }} </td>
-                                            <td> {{ $products->staff_name }} </td>
-                                            <td> {{ $products->created_at }} </td>
-                                            <td> {{ $products->note }} </td>
+                                            <td> {{ $History->old_status }} </td>
+                                            <td> {{ $History->new_status }} </td>
+                                            <td> {{ $History->staff_name }} </td>
+                                            <td> {{ $History->created_at }} </td>
+                                            {{-- <td> {{ $History->note }} </td> --}}
+                                              <td>
+                                                <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#seeNoteStaffModal{{ $History->id }}">
+                                                    Lihat Catatan
+                                                </button>
+                                                
+                                                <div class="modal fade" id="seeNoteStaffModal{{ $History->id }}" tabindex="-1" aria-hidden="true">
+                                                    <div class="modal-dialog modal-dialog-centered">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header">
+                                                                <h5 class="modal-title">Catatan Oleh: {{ $History->staff_name }}</h5>
+                                                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p>{{ $History->note ?? '-' }}</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
                                         </tr>
                                         @endforeach
                                     </tbody>

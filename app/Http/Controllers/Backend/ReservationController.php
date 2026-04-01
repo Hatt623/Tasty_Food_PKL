@@ -67,6 +67,12 @@ class ReservationController extends Controller
         $reservation->payment_status = $request->payment_status;
         $reservation->save();
 
+        $request->validate([
+            'status' => 'required|in:pending,confirmed,cancelled,completed',
+            'payment_status' => 'required|in:paid,unpaid',
+            'note' => 'nullable|string|max:200',
+        ]);
+
         ReservationHistory::create([
             'reservation_id' => $reservation->id,
             'staff_name'     => auth()->user()->name,

@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Reservation extends Model
 {
-    public $fillable = ['user_id', 'reservation_date', 'reservation_time', 'guest_count', 'status', 'payment_status'];
+    public $fillable = ['user_id', 'reservation_date', 'reservation_time', 'guest_count', 'status', 'payment_status','reminder_sent_at'];
 
     //relasi dengan user
     public function user(){
