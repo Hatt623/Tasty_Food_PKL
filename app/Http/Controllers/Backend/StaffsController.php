@@ -70,6 +70,21 @@ class StaffsController extends Controller
         ]);
 
         $user = User::findOrFail($id);
+        if ($user->role == 'admin') {
+             $user->update([
+                'name'     => $request->name,
+                'email'    => $request->email,
+                'password' => Hash::make($request->password),
+                'phone'    => $request->phone,
+                'role'     => 'admin', 
+            ]);
+
+            $user->save();
+            toast('Data berhasil diubah', 'success');    
+            return redirect()->route('backend.staff.index');
+        }
+        
+        else
         $user->update([
             'name'     => $request->name,
             'email'    => $request->email,
