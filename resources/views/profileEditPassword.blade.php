@@ -49,6 +49,7 @@
                             <!-- Submit Button -->
                             <div class="d-grid mb-3">
                                 <button type="submit" class="btn btn-dark btn-lg">Update password</button>
+                                <a href="{{ route('profileEdit', $user->id) }}" class="btn btn-outline-dark btn-lg mb-5">Kembali</a>
                             </div>
 
                         </form>

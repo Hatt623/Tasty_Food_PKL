@@ -70,32 +70,40 @@ class StaffsController extends Controller
         ]);
 
         $user = User::findOrFail($id);
-        if ($user->role == 'admin') {
-             $user->update([
-                'name'     => $request->name,
-                'email'    => $request->email,
-                'password' => Hash::make($request->password),
-                'phone'    => $request->phone,
-                'role'     => 'admin', 
-            ]);
-
-            $user->save();
-            toast('Data berhasil diubah', 'success');    
-            return redirect()->route('backend.staff.index');
-        }
         
-        else
         $user->update([
             'name'     => $request->name,
             'email'    => $request->email,
             'password' => Hash::make($request->password),
             'phone'    => $request->phone,
-            'role'     => 'staff', 
+            'role'     => $user->role, 
         ]);
 
         $user->save();
         toast('Data berhasil diubah', 'success');
         return redirect()->route('backend.staff.index');
+    }
+
+    public function staffEditPassword(string $id)
+    {
+        $user = User::findOrFail($id);
+        return view('backend.staff.editPassword', compact('user'));
+    }
+
+    public function updatePassword(Request $request, string $id)
+    {
+        $request->validate([
+            'password' => 'required|string|min:8|confirmed',
+        ]);
+
+        $user = User::findOrFail($id);
+        $user->update([            
+            'password' => Hash::make($request->password),
+        ]);
+
+        $user->save();
+        toast('Data berhasil diubah', 'success');
+        return redirect()->route('backend.staff.edit', $id);
     }
 
     /**

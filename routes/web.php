@@ -71,6 +71,10 @@ Route::group(['prefix' => 'admin', 'as' => 'backend.', 'middleware' => ['auth', 
     Route::resource('/reservation', ReservationController::class);
    
     Route::post('/contact/{contact}/reply', [ContactController::class, 'reply'])->name('contact.reply');
+
+    Route::get('/staff/{id}/edit-password', [StaffsController::class, 'staffEditPassword'])->name('staff.editPassword');
+    Route::put('/staff/{id}/update-password', [StaffsController::class, 'updatePassword'])->name('staff.updatePassword');
+
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

@@ -164,20 +164,39 @@
                                                         <td>Rp {{ number_format($products->price, 0, ',', '.') }}</td>
                                                         <td>{{ $products->pivot->quantity }}</td>
                                                         <td>
-                                                            <button type="button" class="btn btn-dark btn-sm" data-bs-toggle="modal" data-bs-target="#seeNoteModal{{ $products->id }}">
-                                                                Lihat Catatan
+                                                            <button type="button" class="btn btn-dark btn-sm" data-bs-toggle="modal" data-bs-target="#editNoteModal{{ $products->id }}">
+                                                                lihat/Edit Catatan
                                                             </button>
                                                             
-                                                            <div class="modal fade" id="seeNoteModal{{ $products->id }}" tabindex="-1" aria-hidden="true">
+                                                            <div class="modal fade" id="editNoteModal{{ $products->id }}" tabindex="-1" aria-hidden="true">
                                                                 <div class="modal-dialog modal-dialog-centered">
                                                                     <div class="modal-content">
                                                                         <div class="modal-header">
                                                                             <h5 class="modal-title">Catatan: {{ $products->name }}</h5>
                                                                             <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                                                         </div>
-                                                                        <div class="modal-body">
-                                                                            <p>{{ $products->pivot->note ?? '-' }}</p>
-                                                                        </div>
+                                                                        
+                                                                        {{-- Form diarahkan ke route update yang sama --}}
+                                                                        <form action="{{ route('reservation.products.update', [$reservation->id, $products->id]) }}" method="POST">
+                                                                            @csrf
+                                                                            @method('PUT')
+                                                                            
+                                                                            <div class="modal-body text-start">
+                                                                                <div class="mb-3">
+                                                                                    <label for="note{{ $products->id }}" class="form-label">Isi Catatan</label>
+                                                                                    {{-- Gunakan textarea agar lebih mudah menulis pesan panjang --}}
+                                                                                    <textarea name="note" id="note{{ $products->id }}" class="form-control" rows="4" placeholder="Masukkan catatan di sini...">{{ $products->pivot->note }}</textarea>
+                                                                                </div>
+                                                                                
+                                                                                {{-- Hidden input untuk quantity agar nilainya tidak ter-reset saat update catatan --}}
+                                                                                <input type="hidden" name="quantity" value="{{ $products->pivot->quantity }}">
+                                                                            </div>
+                                                                            
+                                                                            <div class="modal-footer">
+                                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                                                                                <button type="submit" class="btn btn-dark">Simpan Perubahan</button>
+                                                                            </div>
+                                                                        </form>
                                                                     </div>
                                                                 </div>
                                                             </div>

@@ -1239,7 +1239,7 @@ section,
   animation: up-down 2s ease-in-out infinite alternate-reverse both;
 } */
 
-@media (max-width: 640px) {
+@media (max-width: 800px) {
   .hero-img {
     position: static;
     display: flex;
@@ -1429,7 +1429,7 @@ section,
     .section-about .copy > * + *{ margin-top:10px; }
 
     /* Responsive */
-    @media (max-width: 992px){
+    @media (max-width: 700px){
       .section-about .row{ grid-template-columns: 1fr; }
       .tasty .right{ grid-template-rows:none; grid-template-columns: repeat(3, 1fr); }
       .tasty .right .tile{ min-height:120px; }

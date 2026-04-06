@@ -36,6 +36,11 @@
                                 </div>
 
                                 <div class="mb-3">
+                                    <label>Ubah Password</label><br>
+                                    <a href="{{ route('backend.staff.editPassword', $user->id) }}" class="btn btn-sm btn-outline-primary mt-1 mb-4">Ubah Password</a>
+                                </div>
+
+                                {{-- <div class="mb-3">
                                     <label>Password</label>
                                     <input type="password" name="password" 
                                         class="form-control @error('password') is-invalid @enderror" required>
@@ -46,7 +51,7 @@
                                     <label>Confirm Password</label>
                                     <input type="password" name="password_confirmation" 
                                         class="form-control" required>
-                                </div>
+                                </div> --}}
 
                                 <div class="mb-2">
                                     <button type="submit" class="btn btn-sm btn-outline-primary"> Save </button>
