@@ -16,7 +16,7 @@
         <div class="col-lg-3 col-md-6 d-flex">
           <div>
             <h3>Useful Links</h3>
-            <p><a href="{{route ('news.index')}}">News</a></p>
+            <p><a href="{{route ('web.news')}}">News</a></p>
             <p><a href="{{url('/')}}">Home</a></p>
             <p><a href="{{route('gallery.index')}}">Galeri</a></p>
           </div>

@@ -44,7 +44,7 @@
         <!-- Back Button -->
         <section class="mb-5">
             <div class="container text-center">
-                <a href="{{ route('news.index') }}" class="btn-load-more" data-aos="fade-up" data-aos-delay="400">
+                <a href="{{ route('web.news') }}" class="btn-load-more" data-aos="fade-up" data-aos-delay="400">
                     ← Kembali ke Daftar Berita
                 </a>
             </div>
