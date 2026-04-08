@@ -24,7 +24,7 @@ class ReviewController extends Controller
     );
 
     $review->save();
-    toast()->success('terimakasih atas ratingnya!');
+    toast()->success('Terimakasih atas ratingnya! 💕');
     return redirect()->back();
 
 }

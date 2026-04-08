@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Middleware\Admin;
 
 use App\Http\Controllers\BackendController;
@@ -24,7 +25,7 @@ use App\Http\Controllers\ProfileController;
 Route::get('/',[FrontendController::class, 'index']);
 Route::get('/gallery',[FrontendController::class, 'gallery'])->name('gallery.index');
 Route::get('/about',[FrontendController::class, 'about'])->name('about.index');
-Route::get('/news',[FrontendController::class, 'news'])->name('news.index');
+Route::get('/news',[FrontendController::class, 'news'])->name('web.news');
 Route::get('/contact',[FrontendController::class, 'contact'])->name('contact.index');
 Route::get('/newsRead/{id}', [FrontendController::class, 'newsRead'])->name('newsRead.show');
 Route::get('/profile/{id}/edit', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -56,6 +57,17 @@ Auth::routes();
 Route::get('/logout', function () {
     Auth::logout();
     return redirect('/');
+});
+
+// CRON job
+Route::get('/trigger-cron/{token}', function ($token) {
+    if ($token !== 'rahasiarestoran') {
+        abort(403, 'Akses ditolak.');
+    }
+
+    Artisan::call('reservations:check');
+    
+    return 'CRON job berhasil';
 });
 
 Route::group(['prefix' => 'admin', 'as' => 'backend.', 'middleware' => ['auth', Admin::class]], function ()

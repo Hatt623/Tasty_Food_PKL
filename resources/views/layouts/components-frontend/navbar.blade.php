@@ -11,7 +11,7 @@
         <ul>
           <li><a href="{{ url('/') }}">Home<br></a></li>
           <li><a href="{{route('about.index')}}">Tentang</a></li>
-          <li><a href="{{route('news.index')}}">Berita</a></li>
+          <li><a href="{{route('web.news')}}">Berita</a></li>
           <li><a href="{{ route('gallery.index') }}">Galeri</a></li>
           <li><a href="{{route ('contact.index')}}">Kontak</a></li>
           <li><a href="{{route ('reservation.index')}}">Reservasi</a></li>
