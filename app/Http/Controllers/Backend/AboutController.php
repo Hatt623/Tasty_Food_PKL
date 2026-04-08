@@ -96,6 +96,46 @@ class AboutController extends Controller
         return redirect()->route('backend.about.index');
     }
 
+    public function edit2(string $id)
+    {
+        $about = About::findOrFail($id);
+        return view('backend.about.edit2', compact('about'));
+    }
+
+    public function updateAbout2(Request $request, string $id)
+    {
+       $request->validate([
+            'email' => 'required|email|max:255',
+            'phone' => 'required|string|max:20',
+            'address' => 'required|string|max:255',
+            'map_embed' => 'required|string|regex:/iframe|<iframe/',
+        ], 
+        
+        [
+            'email.required' => 'Alamat email wajib diisi.',
+            'email.email' => 'Format email tidak valid.',
+            'email.max' => 'Email maksimal 255 karakter.',
+
+            'phone.required' => 'Nomor telepon wajib diisi.',
+            'phone.max' => 'Nomor telepon maksimal 20 karakter.',
+
+            'address.required' => 'Alamat lengkap wajib diisi.',
+
+            'map_embed.required' => 'Kode iframe peta wajib diisi.',
+            'map_embed.regex' => 'Format salah! Silakan masukkan kode "Embed a map" (HTML iframe) dari Google Maps.',
+        ]);
+    
+        $about = About::findOrFail($id);
+        $about ->email = $request->email;
+        $about ->phone = $request->phone;
+        $about ->address = $request->address;
+        $about ->map_embed = $request->map_embed;
+
+        $about->save();
+        toast('Data berhasil diubah', 'success');
+        return redirect()->route('backend.about.index');
+    }
+
     /**
      * Remove the specified resource from storage.
      */

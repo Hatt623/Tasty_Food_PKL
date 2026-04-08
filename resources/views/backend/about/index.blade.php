@@ -12,6 +12,8 @@
                     <div class="card-header bg-secondary text-white">
                         SILAHKAN EDIT HALAMAN ABOUT 
                     </div>
+
+                    {{-- About 1 --}}
                     <div class="card-body">
                         <div class="table table-responsive">
                             <table class="table">
@@ -24,7 +26,6 @@
                                         <th>Gambar Misi </th>
                                         <th> Aksi </th>
                                     </tr>
-
                                 </thead>
 
                                 <tbody>
@@ -43,6 +44,52 @@
                                             </a> |
 
                                             <a href="{{ route('backend.about.edit', $data->id) }}"
+                                                class="btn btn-sm btn-warning">
+                                                Ubah
+                                            </a>
+                                        </td>
+
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                    {{-- About 2 --}}
+                    <div class="card-body">
+                        <div class="table table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th> Email </th>
+                                        <th> Telepon </th>
+                                        <th> Alamat </th>
+                                        <th> Peta </th>
+                                        <th> Aksi </th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+                                    @foreach ($about as $data)
+                                    <tr>
+                                        <td> {{Str::limit($data->email,10)}} </td>
+                                        <td> {{Str::limit($data->phone,10)}} </td>
+                                        <td> {{Str::limit($data->address,10)}} </td>
+                                        <td> 
+                                            <div class="map-container" style="width: 200px; height: 100px; overflow: hidden; border-radius: 8px;">
+                                                {!! $data->map_embed !!} 
+                                            </div>
+                                        </td>                                                         
+                                        
+                                        <td> 
+                                            <a href="{{ route('contact.index',) }}"
+                                                class="btn btn-sm btn-success">
+                                                Tampilkan
+                                            </a> |
+
+                                            <a href="{{ route('backend.about.edit2', $data->id) }}"
                                                 class="btn btn-sm btn-warning">
                                                 Ubah
                                             </a>

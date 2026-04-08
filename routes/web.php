@@ -66,6 +66,10 @@ Route::group(['prefix' => 'admin', 'as' => 'backend.', 'middleware' => ['auth', 
     Route::resource('/product', ProductController::class);
     Route::resource('/contact', ContactController::class);
     Route::resource('/about', AboutController::class);
+        // About 2
+        Route::get('/about/{id}/edit2', [AboutController::class, 'edit2'])->name('about.edit2');
+        Route::put('/about/{id}/update2', [AboutController::class, 'updateAbout2'])->name('about.update2');
+        
     Route::resource('/news', NewsController::class);  
     Route::resource('/staff', StaffsController::class); 
     Route::resource('/reservation', ReservationController::class);

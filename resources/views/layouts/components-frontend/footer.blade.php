@@ -35,9 +35,9 @@
 
         <div class="col-lg-3 col-md-6">
           <h3>Contact Info</h3>
-            <p><i class="bi bi-envelope-fill" style="margin-right: 10px;"></i><a href="{{route ('contact.index')}}">Delicacy@gmail.com</a></p>
-            <p><i class="bi bi-telephone-fill" style="margin-right: 10px;"></i><a href="{{route ('contact.index')}}">+62 812 3456 7890</a></p>
-            <p><i class="bi bi-geo-alt-fill" style="margin-right: 10px;"></i><a href="{{route ('contact.index')}}">Kota Bandung, Jawa Barat</a></p>
+            <p><i class="bi bi-envelope-fill" style="margin-right: 10px;"></i><a href="{{route ('contact.index')}}">{{$about->email}}</a></p>
+            <p><i class="bi bi-telephone-fill" style="margin-right: 10px;"></i><a href="{{route ('contact.index')}}">{{$about->phone}}</a></p>
+            <p><i class="bi bi-geo-alt-fill" style="margin-right: 10px;"></i><a href="{{route ('contact.index')}}">{{$about->address}}</a></p>
         </div>
       </div>
     </div>

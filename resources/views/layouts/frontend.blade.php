@@ -5,6 +5,7 @@
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <title>Delicacy</title>
+  <link rel="icon" href="{{ asset('assets/frontend/img/Delicacy_logo.png') }}" type="image/x-icon">
   <meta name="description" content="">
   <meta name="keywords" content="">
 

@@ -19,6 +19,10 @@ return new class extends Migration
             $table->string('image_vision');
             $table->string('image_mission');
 
+            $table->string('email');
+            $table->string('phone');
+            $table->string('address');
+            $table->text('map_embed');
 
             $table->timestamps();
         });

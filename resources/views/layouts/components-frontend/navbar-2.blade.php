@@ -3,7 +3,7 @@
 
       <a href="{{ url('/') }}" class="logo d-flex align-items-center me-auto me-xl-0">
         <!-- Jangan dulu -->
-        <!-- <img src="assets/img/logo.png')}}" alt=""> -->
+        <img src="{{ asset('assets/frontend/img/Delicacy_logo.png') }}" alt="">
         <h1 class="sitename-2">Delicacy</h1>
       </a>
 
