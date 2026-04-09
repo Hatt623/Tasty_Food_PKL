@@ -42,7 +42,20 @@ class NewsController extends Controller
             'title' => 'required|',
             'description' => 'required|max:10000',
             'image'  => 'required|image|mimes:jpg,png|max:10024',
-        ]);
+        ],
+        
+        [
+            'title.required' => 'Judul wajib diisi',
+            
+            'description.required' => 'Deskripsi wajib diisi',
+            'description.max' => 'Deskripsi tidak boleh lebih dari 10000 karakter',
+            
+            'image.required' => 'Gambar wajib diunggah',
+            'image.image' => 'File harus berupa gambar',
+            'image.mimes' => 'Gambar harus berformat JPG atau PNG',
+            'image.max' => 'Ukuran gambar tidak boleh lebih dari 10MB',
+        ]
+        );
 
         $news = new News();
         $news ->title = $request->title;
@@ -97,6 +110,17 @@ class NewsController extends Controller
             'title' => 'required|',
             'description' => 'required|max:10000',
             'image'  => 'image|mimes:jpg,png|max:10024',
+        ],
+        [
+            'title.required' => 'Judul wajib diisi',
+            
+            'description.required' => 'Deskripsi wajib diisi',
+            'description.max' => 'Deskripsi tidak boleh lebih dari 10000 karakter',
+            
+            'image.required' => 'Gambar wajib diunggah',
+            'image.image' => 'File harus berupa gambar',
+            'image.mimes' => 'Gambar harus berformat JPG atau PNG',
+            'image.max' => 'Ukuran gambar tidak boleh lebih dari 10MB',
         ]);
 
         $news = News::findOrFail($id);

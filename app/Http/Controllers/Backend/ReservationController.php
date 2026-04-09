@@ -71,6 +71,16 @@ class ReservationController extends Controller
             'status' => 'required|in:pending,confirmed,cancelled,completed',
             'payment_status' => 'required|in:paid,unpaid',
             'note' => 'nullable|string|max:200',
+        ],
+        [
+            'status.required' => 'Status wajib diisi',
+            'status.in' => 'Status tidak valid',
+            
+            'payment_status.required' => 'Status pembayaran wajib diisi',
+            'payment_status.in' => 'Status pembayaran tidak valid',
+            
+            'note.string' => 'Catatan harus berupa teks',
+            'note.max' => 'Catatan tidak boleh lebih dari 200 karakter',
         ]);
 
         ReservationHistory::create([

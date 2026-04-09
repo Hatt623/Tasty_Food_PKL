@@ -27,7 +27,15 @@ class ProfileController extends Controller
         $request->validate([
             'name'     => 'required|string|max:255',
             'email'    => 'required|string|email|max:255|unique:users,email,' . $id,
-        ]);
+        ],
+        
+        [
+            'name.required' => 'Nama harus diisi',
+            'email.required' => 'Email harus diisi',
+            'email.email' => 'Email tidak valid',
+            'email.unique' => 'Email sudah digunakan',
+        ]
+        );
 
         $user = User::findOrFail($id);
         $user->update([
@@ -52,7 +60,14 @@ class ProfileController extends Controller
     {
         $request->validate([
             'password' => 'required|string|min:8|confirmed',
-        ]);
+        ],
+
+        [
+            'password.required' => 'Password harus diisi',
+            'password.min' => 'Password minimal 8 karakter',
+            'password.confirmed' => 'Konfirmasi password tidak cocok',
+         ]
+        );
 
         $user = User::findOrFail($id);
         $user->update([            

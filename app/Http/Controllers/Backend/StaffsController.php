@@ -41,6 +41,17 @@ class StaffsController extends Controller
             'name'     => 'required|string|max:255',
             'email'    => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8|confirmed',
+        ],
+        [
+            'name.required' => 'Nama wajib diisi',
+            
+            'email.required' => 'Email wajib diisi',
+            'email.email' => 'Email tidak valid',
+            'email.unique' => 'Email sudah digunakan',
+            
+            'password.required' => 'Password wajib diisi',
+            'password.min' => 'Password harus minimal 8 karakter',
+            'password.confirmed' => 'Konfirmasi password tidak cocok',
         ]);
 
         User::create([
@@ -67,6 +78,18 @@ class StaffsController extends Controller
             'name'     => 'required|string|max:255',
             'email'    => 'required|string|email|max:255|unique:users,email,' . $id,
             'password' => 'required|string|min:8|confirmed',
+        ],
+        
+        [
+            'name.required' => 'Nama wajib diisi',
+            
+            'email.required' => 'Email wajib diisi',
+            'email.email' => 'Email tidak valid',
+            'email.unique' => 'Email sudah digunakan',
+            
+            'password.required' => 'Password wajib diisi',
+            'password.min' => 'Password harus minimal 8 karakter',
+            'password.confirmed' => 'Konfirmasi password tidak cocok',
         ]);
 
         $user = User::findOrFail($id);

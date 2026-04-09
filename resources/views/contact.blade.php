@@ -37,7 +37,7 @@
                                     @enderror
                                 </div>
                                 <div>
-                                    <input type="text" name="name" value="{{old ('name')}}" class="form-control @error('name') is-invalid @enderror" id="name" placeholder="Name">
+                                    <input type="text" name="name" value="{{$user ? $user->name : old('name')}}" class="form-control @error('name') is-invalid @enderror" id="name" placeholder="Name">
                                 
                                     @error('name')
                                         <span class="invalid-feedback" role="alert">
@@ -46,7 +46,7 @@
                                     @enderror
                                 </div>
                                 <div>
-                                    <input type="email" name="email" value="{{old ('email')}}" class="form-control @error('email') is-invalid @enderror" id="email" placeholder="Email">
+                                    <input type="email" name="email" value="{{$user ? $user->email : old('email')}}" class="form-control @error('email') is-invalid @enderror" id="email" placeholder="Email">
                                 
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">

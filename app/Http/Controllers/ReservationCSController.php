@@ -173,8 +173,17 @@ class ReservationCSController extends Controller
         'guest_count' => 'required|integer|min:1|max:100',
         ],
         [
-            'guest_count.max' => 'Jumlah tamu tidak boleh lebih dari 100',
-            'guest_count.min' => 'Jumlah tamu minimal adalah 1'
+            'reservation_date.required'       => 'Tanggal reservasi wajib diisi',
+            'reservation_date.date'           => 'Tanggal reservasi harus berupa format tanggal yang valid',
+            'reservation_date.after_or_equal' => 'Tanggal reservasi tidak boleh sebelum hari ini',
+
+            'reservation_time.required'       => 'Waktu reservasi wajib diisi',
+            'reservation_time.date_format'    => 'Format waktu harus HH:MM (contoh: 18:30)',
+
+            'guest_count.required' => 'Jumlah tamu wajib diisi',
+            'guest_count.integer'  => 'Jumlah tamu harus berupa angka',
+            'guest_count.min'      => 'Jumlah tamu minimal adalah 1',
+            'guest_count.max'      => 'Jumlah tamu tidak boleh lebih dari 100',
         ]
         );
        

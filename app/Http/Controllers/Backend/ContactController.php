@@ -25,6 +25,7 @@ class ContactController extends Controller
     public function show(string $id)
     {
         $contact = Contact::findOrFail($id);
+
         return view('backend.contact.show', compact('contact'));
     }
 
@@ -41,6 +42,11 @@ class ContactController extends Controller
     {
         $request->validate([
             'reply' => 'required|string|max:1000',
+        ],
+        [
+            'reply.required' => 'Balasan wajib diisi',
+            'reply.string'   => 'Balasan harus berupa teks',
+            'reply.max'      => 'Balasan tidak boleh lebih dari 1000 karakter',
         ]);
 
         Mail::to($contact->email)->send(new ContactReplyMail($contact, $request->reply));

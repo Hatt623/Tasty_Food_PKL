@@ -42,6 +42,16 @@ class ProductController extends Controller
             'price' => 'required|',
             'description' => 'required|max:500',
             'image'  => 'required|image|mimes:jpg,png|max:10024',
+        ],
+        [
+            'name.required' => 'Nama wajib diisi',
+            'price.required' => 'Harga wajib diisi',
+            'description.required' => 'Deskripsi wajib diisi',
+            'description.max' => 'Deskripsi tidak boleh lebih dari 500 karakter',
+            
+            'image.image' => 'File harus berupa gambar',
+            'image.mimes' => 'Gambar harus berformat jpg atau png',
+            'image.max' => 'Ukuran gambar tidak boleh lebih dari 10MB',
         ]);
 
         $product = new Product();
@@ -105,6 +115,16 @@ class ProductController extends Controller
             'description' => 'required|max:500',
             'image'  => 'image|mimes:jpg,png|max:10024',
             
+        ],
+        [
+            'name.required' => 'Nama wajib diisi',
+            'price.required' => 'Harga wajib diisi',
+            'description.required' => 'Deskripsi wajib diisi',
+            'description.max' => 'Deskripsi tidak boleh lebih dari 500 karakter',
+            
+            'image.image' => 'File harus berupa gambar',
+            'image.mimes' => 'Gambar harus berformat jpg atau png',
+            'image.max' => 'Ukuran gambar tidak boleh lebih dari 10MB',
         ]);
 
         $product = Product::findOrFail($id);

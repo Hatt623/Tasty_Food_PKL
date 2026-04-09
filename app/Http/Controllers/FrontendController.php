@@ -58,18 +58,29 @@ class FrontendController extends Controller
      public function contact()
     {
         $about = About::first();
+        $user = auth()->user();
 
-        return view('contact', compact('about'));
+        return view('contact', compact('about','user'));
     }
 
     public function storeContact(Request $request)
     {
-        $request->validate([
-            'subject' => 'required|min:1|max:100',
-            'name' => 'required|min:1|max:100',
-            'email' => 'required|min:1|max:100',
-            'message' => 'required|min:1',
-        ]);
+            $validated = $request->validate([
+                'subject' => 'required|string|max:100',
+                'name' => 'required|string|max:100|regex:/^[a-zA-Z\s]+$/',
+                'email' => 'required|email|max:100',
+                'message' => 'required|string|min:10|max:5000',
+            ], 
+            
+            [
+                'subject.required' => 'Subjek harus diisi',
+                'name.required' => 'Nama harus diisi',
+                'name.regex' => 'Nama hanya boleh berisi huruf',
+                'email.required' => 'Email harus diisi',
+                'email.email' => 'Format email tidak valid',
+                'message.required' => 'Pesan harus diisi',
+                'message.min' => 'Pesan minimal 10 karakter',
+            ]);
 
         $contact = new Contact();
         $contact ->subject  = $request->subject;
