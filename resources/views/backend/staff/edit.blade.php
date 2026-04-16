@@ -29,7 +29,7 @@
 
                                 <div class="mb-3">
                                     <label>Phone</label>
-                                    <input type="phone" name="phone" 
+                                    <input type="number" name="phone" 
                                         class="form-control @error('phone') is-invalid @enderror" 
                                         value="{{ old('phone', $user->phone) }}" required>
                                     @error('phone') <div class="invalid-feedback">{{ $message }}</div> @enderror

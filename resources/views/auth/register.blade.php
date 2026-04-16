@@ -50,7 +50,7 @@
                             <div class="mb-3">
                                 <label for="phone" class="form-label">Phone</label>
                                 <input id="phone" 
-                                       type="phone" 
+                                       type="number" 
                                        name="phone"
                                        value="{{ old('phone') }}" 
                                        class="form-control @error('phone') is-invalid @enderror" 
